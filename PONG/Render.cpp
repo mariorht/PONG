@@ -2,12 +2,15 @@
 
 
 
-Render::Render(Pelota *pelota) : mi_pelota(pelota) {}
+Render::Render(vector<Pelota> *pelota) : mi_pelota(pelota), num_objetos((*pelota).size()) {}
 
 void Render::Pinta()
 {
-	GotoXY(mi_pelota->getPosicionX(), mi_pelota->getPosicionY());
-	cout << mi_pelota->forma;
+	for (int i = 0; i < num_objetos; i++)
+	{
+	GotoXY((*mi_pelota)[i].getPosicionX(), (*mi_pelota)[i].getPosicionY());
+	cout << (*mi_pelota)[i].forma;
+	}
 
 }
 
@@ -18,7 +21,8 @@ void Render::GotoXY(int x, int y)
 	pos.X = x;
 	pos.Y = y;
 	SetConsoleCursorPosition(hConsole, pos);
-}
+}
+
 
 void Render::BorraPantalla()
 {

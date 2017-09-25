@@ -4,22 +4,25 @@
 
 #include "Pelota.h"
 #include <Windows.h>
+#include <vector>
 
 class Render
 {
 protected:
-	Pelota *mi_pelota;
+	vector<Pelota> *mi_pelota;
+	int num_objetos;
 
 
 public:
-	Render(Pelota *pelota);
+	Render(vector<Pelota> *pelota);
 	//~Render();
 
 	void GotoXY(int x, int y);
 	void Pinta();
 
 	void BorraPantalla();
-
+
+
 };
 
 

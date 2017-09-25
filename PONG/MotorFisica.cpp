@@ -2,30 +2,26 @@
 
 
 
-MotorFisica::MotorFisica(Pelota *pelota): mi_pelota(pelota) {}
+MotorFisica::MotorFisica(vector<Pelota> * pelota): mi_pelota(pelota), 
+	num_objetos((*pelota).size()) {}
 
 void MotorFisica::Actualiza()
 {
-	int px, py;
-	px = mi_pelota->getPosicionX();
-	py = mi_pelota->getPosicionY();
+	for (int i = 0; i < num_objetos; i++)
+	{
+		int px, py;
+		px = (*mi_pelota)[i].getPosicionX();
+		py = (*mi_pelota)[i].getPosicionY();
+
+		if (px >= (80 - 1)  || px <= (1))
+			(*mi_pelota)[i].setVelocidadX(-(*mi_pelota)[i].getVelocidadX());
+
+		if (py >= (40 - 1) || py <= (1))
+			(*mi_pelota)[i].setVelocidadY(-(*mi_pelota)[i].getVelocidadY());
 
 
-
-	if (px >= (80 - 1))
-		mi_pelota->setVelocidadX(-3);
-
-	if (px <= (1))
-		mi_pelota->setVelocidadX(3);
-
-	if (py >= (40 - 1))
-		mi_pelota->setVelocidadY(-2);
-
-	if (py <= (1))
-		mi_pelota->setVelocidadY(2);
-
-
-	mi_pelota->setPosicion(mi_pelota->getPosicionX() + mi_pelota->getVelocidadX(),
-		mi_pelota->getPosicionY() + mi_pelota->getVelocidadY());
+		(*mi_pelota)[i].setPosicion((*mi_pelota)[i].getPosicionX() + (*mi_pelota)[i].getVelocidadX(),
+			(*mi_pelota)[i].getPosicionY() + (*mi_pelota)[i].getVelocidadY());
+	}
 }
 

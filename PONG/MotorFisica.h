@@ -4,14 +4,16 @@
 
 
 #include "Pelota.h"
+#include <vector>
 
 class MotorFisica
 {
 
 protected:
-	Pelota *mi_pelota;
+	vector<Pelota>* mi_pelota;
+	int num_objetos;
 public:
-	MotorFisica(Pelota *pelota);
+	MotorFisica(vector<Pelota>* pelota);
 	//~MotorFisica();
 
 	void Actualiza();

@@ -8,26 +8,27 @@
 
 void main()
 {
+	vector<Pelota> mis_pelotas;
+
+	for (int i = 3; i < 35; i++)
+	{
+		Pelota mi_pelota = Pelota(i, i, 1.5*i, 2*i, 1, 1, 1, 1);
+		mis_pelotas.push_back(mi_pelota);
+	}
 
 
-	Pelota *pelota1 = &Pelota(0,0,1,1,1,1,1,1);
-	Render motorRender= Render(pelota1);
-	MotorFisica motorFisica = MotorFisica(pelota1);
 
-	Pelota *pelota2 = &Pelota(20, 30, 1, 1, 1, 1, 1, 1);
-	Render motorRender2 = Render(pelota2);
-	MotorFisica motorFisica2 = MotorFisica(pelota2);
+	Render motorRender= Render(&mis_pelotas);
+	MotorFisica motorFisica = MotorFisica(&mis_pelotas);
+
 
 	while (true)
 	{
-	motorFisica.Actualiza();
-	
+	motorFisica.Actualiza();	
 	motorRender.BorraPantalla();
 	motorRender.Pinta();
 
-	motorFisica2.Actualiza();
 
-	motorRender2.Pinta();
 
 
 	Sleep(20);
