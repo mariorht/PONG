@@ -10,9 +10,9 @@ void main()
 {
 	vector<Pelota> mis_pelotas;
 
-	for (int i = 3; i < 35; i++)
+	for (int i = 5; i < 10; i++)
 	{
-		Pelota mi_pelota = Pelota(i, i, 1.5*i, 2*i, 1, 1, 1, 1);
+		Pelota mi_pelota = Pelota(i, i, i/2, i/5, 1, 1, 1, 1);
 		mis_pelotas.push_back(mi_pelota);
 	}
 
@@ -31,7 +31,7 @@ void main()
 
 
 
-	Sleep(20);
+	Sleep(50);
 
 	}
 
