@@ -5,13 +5,14 @@
 
 #include "ObjetoJuego.h"
 
+
 class Pelota :public ObjetoJuego
 {
 protected:
 
 public:
 	
-	Pelota(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char f);
+	Pelota(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float w, float h);
 	//~Pelota();
 };
 

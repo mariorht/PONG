@@ -13,10 +13,10 @@ void MotorFisica::Actualiza()
 		px = (*mi_pelota)[i].getPosicionX();
 		py = (*mi_pelota)[i].getPosicionY();
 
-		if (px >= (1000 - 100)  || px <= (1))
+		if (px >= (1000 - 10)  || px <= (1))
 			(*mi_pelota)[i].setVelocidadX(-(*mi_pelota)[i].getVelocidadX());
 
-		if (py >= ( 1000 - 100) || py <= (1))
+		if (py >= ( 1000 - 10) || py <= (1))
 			(*mi_pelota)[i].setVelocidadY(-(*mi_pelota)[i].getVelocidadY());
 
 

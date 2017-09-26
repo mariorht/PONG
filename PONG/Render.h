@@ -5,20 +5,22 @@
 #include "Pelota.h"
 #include <Windows.h>
 #include <vector>
+#include <SDL.h>
 
 
-#define SCREEN_WIDTH  640
-#define SCREEN_HEIGHT  400
+#define SCREEN_WIDTH  1000
+#define SCREEN_HEIGHT  1000
 
 class Render
 {
 protected:
 	vector<Pelota> *mi_pelota;
 	int num_objetos;
+	SDL_Surface *destination;
 
 
 public:
-	Render(vector<Pelota> *pelota);
+	Render(vector<Pelota> *pelota, SDL_Surface *d);
 	//~Render();
 
 	void GotoXY(int x, int y);

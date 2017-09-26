@@ -6,6 +6,8 @@
 
 #include <iostream>
 #include <string>
+#include <SDL.h>
+
 using namespace std;
 
 class ObjetoJuego
@@ -16,15 +18,17 @@ protected:
 	float aX, aY;
 
 	float ancho, alto;
-	char forma;
-	string forma_2D;
+
+	SDL_Surface *image;
+	
 
 
 
 
 public:
+	SDL_Rect rect;
 	//ObjetoJuego();
-	ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char forma);
+	ObjetoJuego(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float w, float h);
 	//~ObjetoJuego();
 
 	void setPosicion(float, float);
@@ -38,11 +42,10 @@ public:
 	float getVelocidadX();
 	float getVelocidadY();
 
-	char getForma();
-	void setForma(char);
 
-	void construir_forma(); //por hacer
-	string getForma2D();
+
+	void Dibuja(SDL_Surface *destination);
+
 
 
 

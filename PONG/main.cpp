@@ -15,7 +15,7 @@
 int main(int arcg, char * args[])
 {
 	SDL_Window* window = NULL;
-	SDL_Surface* screenSurface = NULL;
+	SDL_Surface* screen = NULL;
 
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -38,10 +38,10 @@ int main(int arcg, char * args[])
 		else
 		{
 			//Get window surface
-			screenSurface = SDL_GetWindowSurface(window);
+			screen = SDL_GetWindowSurface(window);
 
 			//Fill the surface white
-			SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+			SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 
 			//Update the surface
 			SDL_UpdateWindowSurface(window);
@@ -51,14 +51,18 @@ int main(int arcg, char * args[])
 			//Vector de objetos
 			vector<Pelota> mis_pelotas;
 
-			for (int i = 5; i < 15; i += 2)
+			Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
+			
+			for (int i = 1; i < 4; i++)
 			{
-				Pelota mi_pelota = Pelota(i*5.5, i * 10, 20, 20, 1, 1, 2, 2, 'O');
+				Pelota mi_pelota(black, 25*i, 25*i, 20, 10, 0, 0, 20, 20);
 				mis_pelotas.push_back(mi_pelota);
 			}
-
-			Render motorRender = Render(&mis_pelotas);
+			
+			Render motorRender = Render(&mis_pelotas, screen);
 			MotorFisica motorFisica = MotorFisica(&mis_pelotas);
+
+			SDL_UpdateWindowSurface(window);
 
 
 			//Flag bucle
@@ -75,6 +79,8 @@ int main(int arcg, char * args[])
 				motorFisica.Actualiza();
 				motorRender.BorraPantalla();
 				motorRender.Pinta();
+
+				SDL_UpdateWindowSurface(window);
 
 
 

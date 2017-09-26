@@ -1,19 +1,36 @@
 #include "ObjetoJuego.h"
 
 
-
-ObjetoJuego::ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char f) :
-	posX(px), posY(py), velX(vx), velY(vy), aX(ax), aY(ay), ancho(w), alto(h), forma(f) 
+ObjetoJuego::ObjetoJuego(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float w, float h)
 {
-	construir_forma();
+	posX=px;
+	posY=py;
+	velX=vx;
+	velY=vy;
+	aX=ax;
+	aY=ay;
+	ancho=w;
+	alto=h;
+
+	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+
+	SDL_FillRect(image, NULL, color);
+	rect = image->clip_rect;
+	
+	rect.x = px ;
+	rect.y = py ;
 }
 
 
 
-void ObjetoJuego::setPosicion(float px, float py) 
+
+
+void ObjetoJuego::setPosicion(float px, float py)
 {
 	posX = px;
 	posY = py;
+	rect.x = px;
+	rect.y = py;
 }
 
 void ObjetoJuego::setVelocidadX(float vx)
@@ -60,23 +77,7 @@ float ObjetoJuego::getVelocidadY()
 	return velY;
 }
 
-
-char ObjetoJuego::getForma()
+void ObjetoJuego::Dibuja(SDL_Surface * destination)
 {
-	return forma;
-}
-
-
-void ObjetoJuego::setForma(char f)
-{
-	forma = f;
-}
-
-void ObjetoJuego::construir_forma()
-{
-}
-
-string ObjetoJuego::getForma2D()
-{
-	return forma_2D;
+	SDL_BlitSurface(image, NULL, destination, &rect);
 }

@@ -2,7 +2,12 @@
 
 
 
-Render::Render(vector<Pelota> *pelota) : mi_pelota(pelota), num_objetos((*pelota).size()) {}
+Render::Render(vector<Pelota> *pelota, SDL_Surface *d)
+{
+	mi_pelota = pelota;
+	num_objetos = (*pelota).size();
+	destination = d;
+}
 
 void Render::Pinta()
 {
@@ -10,8 +15,11 @@ void Render::Pinta()
 	{
 		int posicionX = (*mi_pelota)[i].getPosicionX() / 1000.0 *SCREEN_WIDTH;
 		int posicionY = (*mi_pelota)[i].getPosicionY() / 1000.0 * SCREEN_HEIGHT;
-	GotoXY( posicionX, posicionY);
-	cout << (*mi_pelota)[i].getForma();
+
+		(*mi_pelota)[i].rect.x = posicionX;
+		(*mi_pelota)[i].rect.y = posicionY;
+	
+		(*mi_pelota)[i].Dibuja(destination);
 	}
 
 }
@@ -28,22 +36,5 @@ void Render::GotoXY(int x, int y)
 
 void Render::BorraPantalla()
 {
-	COORD coordScreen = { 0, 0 }; /* here's where we'll home the cursor */
-	BOOL bSuccess;
-	DWORD cCharsWritten;
-	CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */
-	DWORD dwConSize; /* number of character cells in the current buffer */
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	/* get the number of character cells in the current buffer */
-	bSuccess = GetConsoleScreenBufferInfo(hConsole, &csbi);
-	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
-	/* fill the entire screen with blanks */
-	bSuccess = FillConsoleOutputCharacter(hConsole, (TCHAR) ' ',
-		dwConSize, coordScreen, &cCharsWritten);
-	/* get the current text attribute */
-	bSuccess = GetConsoleScreenBufferInfo(hConsole, &csbi);
-	/* now set the buffer's attributes accordingly */
-	bSuccess = FillConsoleOutputAttribute(hConsole, csbi.wAttributes,
-		dwConSize, coordScreen, &cCharsWritten);
-	return;
+	SDL_FillRect(destination, NULL, SDL_MapRGB(destination->format, 0xFF, 0xFF, 0xFF));
 }
