@@ -7,8 +7,8 @@
 #include <vector>
 
 
-#define SCREEN_WIDTH  80;
-#define SCREEN_HEIGHT  30;
+#define SCREEN_WIDTH  640
+#define SCREEN_HEIGHT  400
 
 class Render
 {

@@ -8,9 +8,6 @@
 
 
 
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 30
-
 class MotorFisica
 {
 
