@@ -16,13 +16,15 @@ protected:
 	float aX, aY;
 
 	float ancho, alto;
+	char forma;
+	string forma_2D;
 
 
 
 
 public:
 	//ObjetoJuego();
-	ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h);
+	ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char forma);
 	//~ObjetoJuego();
 
 	void setPosicion(float, float);
@@ -35,6 +37,14 @@ public:
 	float getPosicionY();
 	float getVelocidadX();
 	float getVelocidadY();
+
+	char getForma();
+	void setForma(char);
+
+	void construir_forma(); //por hacer
+	string getForma2D();
+
+
 
 
 };

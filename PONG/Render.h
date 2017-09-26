@@ -6,6 +6,10 @@
 #include <Windows.h>
 #include <vector>
 
+
+#define SCREEN_WIDTH  80;
+#define SCREEN_HEIGHT  30;
+
 class Render
 {
 protected:

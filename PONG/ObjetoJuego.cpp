@@ -2,8 +2,11 @@
 
 
 
-ObjetoJuego::ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h) :
-	posX(px), posY(py), velX(vx), velY(vy), aX(ax), aY(ay), ancho(w), alto(h) {}
+ObjetoJuego::ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char f) :
+	posX(px), posY(py), velX(vx), velY(vy), aX(ax), aY(ay), ancho(w), alto(h), forma(f) 
+{
+	construir_forma();
+}
 
 
 
@@ -57,3 +60,23 @@ float ObjetoJuego::getVelocidadY()
 	return velY;
 }
 
+
+char ObjetoJuego::getForma()
+{
+	return forma;
+}
+
+
+void ObjetoJuego::setForma(char f)
+{
+	forma = f;
+}
+
+void ObjetoJuego::construir_forma()
+{
+}
+
+string ObjetoJuego::getForma2D()
+{
+	return forma_2D;
+}

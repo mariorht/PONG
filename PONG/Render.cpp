@@ -8,8 +8,10 @@ void Render::Pinta()
 {
 	for (int i = 0; i < num_objetos; i++)
 	{
-	GotoXY((*mi_pelota)[i].getPosicionX(), (*mi_pelota)[i].getPosicionY());
-	cout << (*mi_pelota)[i].forma;
+		int posicionX = (*mi_pelota)[i].getPosicionX() / 1000.0 *SCREEN_WIDTH;
+		int posicionY = (*mi_pelota)[i].getPosicionY() / 1000.0 * SCREEN_HEIGHT;
+	GotoXY( posicionX, posicionY);
+	cout << (*mi_pelota)[i].getForma();
 	}
 
 }

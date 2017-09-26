@@ -10,8 +10,8 @@ class Pelota :public ObjetoJuego
 protected:
 
 public:
-	char forma;
-	Pelota(float px, float py, float vx, float vy, float ax, float ay, float w, float h);
+	
+	Pelota(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char f);
 	//~Pelota();
 };
 
