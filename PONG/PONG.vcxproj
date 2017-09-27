@@ -125,6 +125,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MotorFisica.cpp" />
     <ClCompile Include="ObjetoJuego.cpp" />
+    <ClCompile Include="Pared.cpp" />
     <ClCompile Include="Pelota.cpp" />
     <ClCompile Include="Render.cpp" />
   </ItemGroup>
@@ -134,6 +135,7 @@
     <ClInclude Include="InterfazUsuario.h" />
     <ClInclude Include="MotorFisica.h" />
     <ClInclude Include="ObjetoJuego.h" />
+    <ClInclude Include="Pared.h" />
     <ClInclude Include="Pelota.h" />
     <ClInclude Include="Render.h" />
   </ItemGroup>
