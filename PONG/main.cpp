@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Pelota.h"
 #include "MotorFisica.h"
+#include"InterfazUsuario.h"
 
 #include <SDL.h>
 
@@ -65,6 +66,7 @@ int main(int arcg, char * args[])
 
 			SDL_UpdateWindowSurface(window);
 
+			InterfazUsuario miIU;
 
 			//Flag bucle
 			bool cerrar = FALSE;
@@ -82,6 +84,11 @@ int main(int arcg, char * args[])
 				motorRender.Pinta();
 
 				SDL_UpdateWindowSurface(window);
+
+				if (miIU.DetectaPulsacion(e) == 1)
+					cout << "Pulsado arriba" << endl;
+				if (miIU.DetectaPulsacion(e) == 2)
+					cout << "Pulsado abajo" << endl;
 
 
 

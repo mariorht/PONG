@@ -33,6 +33,9 @@
     <ClCompile Include="Campo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="InterfazUsuario.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjetoJuego.h">
@@ -48,6 +51,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Campo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfazUsuario.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -120,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Campo.cpp" />
+    <ClCompile Include="InterfazUsuario.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MotorFisica.cpp" />
     <ClCompile Include="ObjetoJuego.cpp" />
@@ -128,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Campo.h" />
+    <ClInclude Include="InterfazUsuario.h" />
     <ClInclude Include="MotorFisica.h" />
     <ClInclude Include="ObjetoJuego.h" />
     <ClInclude Include="Pelota.h" />
