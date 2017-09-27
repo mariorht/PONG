@@ -19,16 +19,12 @@ protected:
 	float posX, posY;
 	float velX, velY;
 	float aX, aY;
-
+	Uint32 color;
+	
 	float ancho, alto;
 
-	SDL_Surface *image;
-
-
-
 public:
-	SDL_Rect rect;
-	//ObjetoJuego();
+
 	ObjetoJuego(Uint32 color,
 		float px, float py, 
 		float vx, float vy,
@@ -42,20 +38,13 @@ public:
 	void setAceleracion(float, float);
 	void setDimensiones(float, float);
 
+	Uint32 getColor();
 	float getAncho();
 	float getAlto();
 	float getPosicionX();
 	float getPosicionY();
 	float getVelocidadX();
 	float getVelocidadY();
-
-
-	//Llevar función a clase render
-	void Dibuja(SDL_Surface *destination);
-
-
-
-
 
 };
 

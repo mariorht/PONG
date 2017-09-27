@@ -4,7 +4,7 @@ class Pared :
 	public ObjetoJuego
 {
 public:
-	Pared();
-	~Pared();
+	//Pared();
+	//~Pared();
 };
 

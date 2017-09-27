@@ -1,8 +1,9 @@
 #include "ObjetoJuego.h"
 
 
-ObjetoJuego::ObjetoJuego(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float w, float h)
+ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float ax, float ay, float w, float h)
 {
+	color = c;
 	posX=px;
 	posY=py;
 	velX=vx;
@@ -12,25 +13,21 @@ ObjetoJuego::ObjetoJuego(Uint32 color, float px, float py, float vx, float vy, f
 	ancho=w;
 	alto=h;
 
-	image = SDL_CreateRGBSurface(0, w * SCREEN_WIDTH / 1000, h * SCREEN_HEIGHT / 1000, 32, 0, 0, 0, 0);
 
-	SDL_FillRect(image, NULL, color);
-	rect = image->clip_rect;
-	
-	rect.x = px ;
-	rect.y = py ;
 }
 
 
 
-
+Uint32 ObjetoJuego::getColor()
+{
+	return color;
+}
 
 void ObjetoJuego::setPosicion(float px, float py)
 {
 	posX = px;
 	posY = py;
-	rect.x = px;
-	rect.y = py;
+
 }
 
 void ObjetoJuego::setVelocidadX(float vx)
@@ -78,12 +75,12 @@ float ObjetoJuego::getVelocidadY()
 }
 
 
-
+/*
 void ObjetoJuego::Dibuja(SDL_Surface * destination)
 {
 	SDL_BlitSurface(image, NULL, destination, &rect);
 }
-
+*/
 float ObjetoJuego::getAncho()
 {
 	return ancho;

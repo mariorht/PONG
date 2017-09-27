@@ -17,13 +17,16 @@ protected:
 	ColeccionObjetos coleccion;
 	int num_objetos;
 	SDL_Surface *destination;
+	SDL_Surface *image;
+	SDL_Rect rect;
 
 
 public:
 	Render(ColeccionObjetos objetos, SDL_Surface *d);
 	//~Render();
 
-	void Pinta();
+	void DibujaRectangulo();
+	void DibujaTodo();
 
 	void BorraPantalla();
 

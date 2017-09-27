@@ -55,9 +55,9 @@ int main(int arcg, char * args[])
 
 			Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
 			
-			for (int i = 1; i < 5; i++)
+			for (int i = 1; i < 2; i++)
 			{
-				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 20, 10, 0, 0, 20, 20);
+				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 25, 10, 0, 0, 500, 500);
 				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
 			
@@ -81,7 +81,7 @@ int main(int arcg, char * args[])
 				}
 				motorFisica.Actualiza();
 				motorRender.BorraPantalla();
-				motorRender.Pinta();
+				motorRender.DibujaTodo();
 
 				SDL_UpdateWindowSurface(window);
 
