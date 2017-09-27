@@ -51,18 +51,18 @@ int main(int arcg, char * args[])
 
 
 			//Vector de objetos
-			vector<Pelota> mis_pelotas;
+			ColeccionObjetos mi_coleccion = ColeccionObjetos();
 
 			Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
 			
-			for (int i = 1; i < 2; i++)
+			for (int i = 1; i < 5; i++)
 			{
-				Pelota mi_pelota(black, 25*i, 25*i, 20, 10, 0, 0, 20, 20);
-				mis_pelotas.push_back(mi_pelota);
+				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 20, 10, 0, 0, 20, 20);
+				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
 			
-			Render motorRender = Render(&mis_pelotas, screen);
-			MotorFisica motorFisica = MotorFisica(&mis_pelotas);
+			Render motorRender = Render(mi_coleccion, screen);
+			MotorFisica motorFisica = MotorFisica(mi_coleccion);
 
 			SDL_UpdateWindowSurface(window);
 

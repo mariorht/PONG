@@ -2,39 +2,32 @@
 
 
 
-Render::Render(vector<Pelota> *pelota, SDL_Surface *d)
+Render::Render(ColeccionObjetos objetos, SDL_Surface *d)
 {
-	mi_pelota = pelota;
-	num_objetos = (*pelota).size();
+	coleccion = objetos;
+	num_objetos = coleccion.getTamColeccion();
 	destination = d;
 }
 
 void Render::Pinta()
 {
+	vector<ObjetoJuego*> mis_objetos = coleccion.getColeccionObjetos();
 	for (int i = 0; i < num_objetos; i++)
 	{
-		
-		int posicionX = (*mi_pelota)[i].getPosicionX() / 1000.0 *SCREEN_WIDTH;
-		int posicionY = (*mi_pelota)[i].getPosicionY() / 1000.0  *SCREEN_HEIGHT;
+		int posicionX = mis_objetos[i]->getPosicionX() / 1000.0 *SCREEN_WIDTH;
+		int posicionY = mis_objetos[i]->getPosicionY() / 1000.0 * SCREEN_HEIGHT;
 
 		
-		(*mi_pelota)[i].rect.x = posicionX;
-		(*mi_pelota)[i].rect.y = posicionY;
+		mis_objetos[i]->rect.x = posicionX;
+		mis_objetos[i]->rect.y = posicionY;
 				
 
-		(*mi_pelota)[i].Dibuja(destination);
+		mis_objetos[i]->Dibuja(destination);
 	}
 
 }
 
-void Render::GotoXY(int x, int y)
-{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	_COORD pos;
-	pos.X = x;
-	pos.Y = y;
-	SetConsoleCursorPosition(hConsole, pos);
-}
+
 
 
 void Render::BorraPantalla()

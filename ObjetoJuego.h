@@ -6,11 +6,6 @@
 
 #include <iostream>
 #include <string>
-#include <SDL.h>
-
-#define SCREEN_WIDTH  500
-#define SCREEN_HEIGHT  500
-
 using namespace std;
 
 class ObjetoJuego
@@ -21,19 +16,15 @@ protected:
 	float aX, aY;
 
 	float ancho, alto;
+	char forma;
+	string forma_2D;
 
-	SDL_Surface *image;
 
 
 
 public:
-	SDL_Rect rect;
 	//ObjetoJuego();
-	ObjetoJuego(Uint32 color,
-		float px, float py, 
-		float vx, float vy,
-		float ax, float ay,
-		float w, float h);
+	ObjetoJuego(float px, float py, float vx, float vy, float ax, float ay, float w, float h, char forma);
 	//~ObjetoJuego();
 
 	void setPosicion(float, float);
@@ -42,17 +33,16 @@ public:
 	void setAceleracion(float, float);
 	void setDimensiones(float, float);
 
-	float getAncho();
-	float getAlto();
 	float getPosicionX();
 	float getPosicionY();
 	float getVelocidadX();
 	float getVelocidadY();
 
+	char getForma();
+	void setForma(char);
 
-	//Llevar función a clase render
-	void Dibuja(SDL_Surface *destination);
-
+	void construir_forma(); //por hacer
+	string getForma2D();
 
 
 

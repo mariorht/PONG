@@ -4,8 +4,8 @@
 
 #include "Pelota.h"
 #include <Windows.h>
-#include <vector>
 #include <SDL.h>
+#include "ColeccionObjetos.h"
 
 #define SCREEN_WIDTH  500
 #define SCREEN_HEIGHT  500
@@ -14,16 +14,15 @@
 class Render
 {
 protected:
-	vector<Pelota> *mi_pelota;
+	ColeccionObjetos coleccion;
 	int num_objetos;
 	SDL_Surface *destination;
 
 
 public:
-	Render(vector<Pelota> *pelota, SDL_Surface *d);
+	Render(ColeccionObjetos objetos, SDL_Surface *d);
 	//~Render();
 
-	void GotoXY(int x, int y);
 	void Pinta();
 
 	void BorraPantalla();

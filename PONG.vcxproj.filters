@@ -33,10 +33,10 @@
     <ClCompile Include="Campo.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="InterfazUsuario.cpp">
+    <ClCompile Include="ColeccionObjetos.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="ColeccionObjetos.cpp">
+    <ClCompile Include="Pared.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,10 +56,10 @@
     <ClInclude Include="Campo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="InterfazUsuario.h">
+    <ClInclude Include="ColeccionObjetos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ColeccionObjetos.h">
+    <ClInclude Include="Pared.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
