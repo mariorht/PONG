@@ -12,7 +12,7 @@ ObjetoJuego::ObjetoJuego(Uint32 color, float px, float py, float vx, float vy, f
 	ancho=w;
 	alto=h;
 
-	image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+	image = SDL_CreateRGBSurface(0, w * SCREEN_WIDTH / 1000, h * SCREEN_HEIGHT / 1000, 32, 0, 0, 0, 0);
 
 	SDL_FillRect(image, NULL, color);
 	rect = image->clip_rect;
@@ -77,7 +77,19 @@ float ObjetoJuego::getVelocidadY()
 	return velY;
 }
 
+
+
 void ObjetoJuego::Dibuja(SDL_Surface * destination)
 {
 	SDL_BlitSurface(image, NULL, destination, &rect);
+}
+
+float ObjetoJuego::getAncho()
+{
+	return ancho;
+}
+
+float ObjetoJuego::getAlto()
+{
+	return alto;
 }

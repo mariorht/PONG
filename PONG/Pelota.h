@@ -6,7 +6,7 @@
 #include "ObjetoJuego.h"
 
 
-class Pelota :public ObjetoJuego
+class Pelota:public ObjetoJuego
 {
 protected:
 

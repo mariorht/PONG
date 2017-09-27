@@ -8,6 +8,9 @@
 #include <string>
 #include <SDL.h>
 
+#define SCREEN_WIDTH  500
+#define SCREEN_HEIGHT  500
+
 using namespace std;
 
 class ObjetoJuego
@@ -20,8 +23,6 @@ protected:
 	float ancho, alto;
 
 	SDL_Surface *image;
-	
-
 
 
 
@@ -37,13 +38,15 @@ public:
 	void setAceleracion(float, float);
 	void setDimensiones(float, float);
 
+	float getAncho();
+	float getAlto();
 	float getPosicionX();
 	float getPosicionY();
 	float getVelocidadX();
 	float getVelocidadY();
 
 
-
+	//Llevar función a clase render
 	void Dibuja(SDL_Surface *destination);
 
 

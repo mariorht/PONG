@@ -13,12 +13,15 @@ void Render::Pinta()
 {
 	for (int i = 0; i < num_objetos; i++)
 	{
+		
 		int posicionX = (*mi_pelota)[i].getPosicionX() / 1000.0 *SCREEN_WIDTH;
-		int posicionY = (*mi_pelota)[i].getPosicionY() / 1000.0 * SCREEN_HEIGHT;
+		int posicionY = (*mi_pelota)[i].getPosicionY() / 1000.0  *SCREEN_HEIGHT;
 
+		
 		(*mi_pelota)[i].rect.x = posicionX;
 		(*mi_pelota)[i].rect.y = posicionY;
-	
+				
+
 		(*mi_pelota)[i].Dibuja(destination);
 	}
 

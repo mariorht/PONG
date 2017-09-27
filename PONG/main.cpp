@@ -1,3 +1,4 @@
+
 #include "ObjetoJuego.h"
 #include "Render.h"
 #include "Pelota.h"
@@ -53,7 +54,7 @@ int main(int arcg, char * args[])
 
 			Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
 			
-			for (int i = 1; i < 4; i++)
+			for (int i = 1; i < 2; i++)
 			{
 				Pelota mi_pelota(black, 25*i, 25*i, 20, 10, 0, 0, 20, 20);
 				mis_pelotas.push_back(mi_pelota);
