@@ -90,3 +90,8 @@ float ObjetoJuego::getAlto()
 {
 	return alto;
 }
+
+bool ObjetoJuego::getAfectadoPorPulsacion()
+{
+	return AfectadoPorPulsacion;
+}

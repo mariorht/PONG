@@ -4,6 +4,7 @@
 #include "Pelota.h"
 #include "MotorFisica.h"
 #include"InterfazUsuario.h"
+#include "Raqueta.h"
 
 #include <SDL.h>
 
@@ -57,9 +58,12 @@ int main(int arcg, char * args[])
 			
 			for (int i = 1; i < 2; i++)
 			{
-				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 25, 10, 0, 0, 500, 500);
+				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 25, 10, 0, 0, 50, 50);
 				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
+
+			Raqueta mi_raqueta(black, 50, 500, 0, 0, 25, 200);
+			mi_coleccion.AgregaObjeto(&mi_raqueta);
 			
 			Render motorRender = Render(mi_coleccion, screen);
 			MotorFisica motorFisica = MotorFisica(mi_coleccion);
@@ -79,15 +83,17 @@ int main(int arcg, char * args[])
 					if (e.type == SDL_QUIT)
 						cerrar = true;
 				}
-				motorFisica.Actualiza();
+
+
+				motorFisica.Actualiza(miIU.DetectaPulsacion(e));
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
 
 				SDL_UpdateWindowSurface(window);
-
-				if (miIU.DetectaPulsacion(e) == 1)
+				int tecla = miIU.DetectaPulsacion(e);
+				if (tecla== 1)
 					cout << "Pulsado arriba" << endl;
-				if (miIU.DetectaPulsacion(e) == 2)
+				if (tecla == 2)
 					cout << "Pulsado abajo" << endl;
 
 

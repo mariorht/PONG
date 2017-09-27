@@ -19,6 +19,7 @@ protected:
 	float posX, posY;
 	float velX, velY;
 	float aX, aY;
+	bool AfectadoPorPulsacion;
 	Uint32 color;
 	
 	float ancho, alto;
@@ -39,6 +40,9 @@ public:
 	void setDimensiones(float, float);
 
 	Uint32 getColor();
+
+	bool getAfectadoPorPulsacion();
+
 	float getAncho();
 	float getAlto();
 	float getPosicionX();

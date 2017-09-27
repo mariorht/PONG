@@ -5,6 +5,7 @@
 
 #include "Pelota.h"
 #include "ColeccionObjetos.h"
+#include "InterfazUsuario.h"
 
 
 
@@ -18,7 +19,7 @@ public:
 	MotorFisica(ColeccionObjetos objetos);
 	//~MotorFisica();
 
-	void Actualiza();
+	void Actualiza(int tecla);
 };
 
 
