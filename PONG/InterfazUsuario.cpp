@@ -12,10 +12,21 @@ InterfazUsuario::~InterfazUsuario()
 }
 
 
-int InterfazUsuario::DetectaPulsacion(SDL_Event & e)
+int InterfazUsuario::DetectaPulsacion()
 {
+	if (GetAsyncKeyState(VK_UP))
+		return ARRIBA;
+	if (GetAsyncKeyState(VK_DOWN))
+		return ABAJO;
+	if (GetAsyncKeyState(VK_LEFT))
+		return  IZQUIERDA;
+	if (GetAsyncKeyState(VK_RIGHT))
+		return DERECHA;
+
+
+
 //If a key was pressed
-if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
+/*if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 {
 	//Adjust the velocity
 	switch (e.key.keysym.sym)
@@ -27,6 +38,7 @@ if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 		
 	}
 }
+*/
 return 0;
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <Windows.h>
 
 #define ARRIBA 1
 #define ABAJO 2
@@ -13,7 +13,7 @@ public:
 	InterfazUsuario();
 	~InterfazUsuario();
 
-	int DetectaPulsacion(SDL_Event& e);
+	int DetectaPulsacion();
 
 };
 

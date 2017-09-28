@@ -7,7 +7,7 @@ class Raqueta :
 	public ObjetoJuego
 {
 public:
-	Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h);
+	Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz);
 	~Raqueta();
 };
 

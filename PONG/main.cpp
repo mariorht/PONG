@@ -58,11 +58,11 @@ int main(int arcg, char * args[])
 			
 			for (int i = 1; i < 2; i++)
 			{
-				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 25, 10, 0, 0, 50, 50);
+				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 50, 10, 0, 0, 50, 50, 0);
 				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
 
-			Raqueta mi_raqueta(black, 50, 500, 0, 0, 25, 200);
+			Raqueta mi_raqueta(black, 50.0, 500.0, 0, 0, 25.0, 200.0, .4);
 			mi_coleccion.AgregaObjeto(&mi_raqueta);
 			
 			Render motorRender = Render(mi_coleccion, screen);
@@ -85,15 +85,15 @@ int main(int arcg, char * args[])
 				}
 
 
-				motorFisica.Actualiza(miIU.DetectaPulsacion(e));
+				motorFisica.Actualiza(miIU.DetectaPulsacion());
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
 
 				SDL_UpdateWindowSurface(window);
-				int tecla = miIU.DetectaPulsacion(e);
-				if (tecla== 1)
+				
+				if (GetAsyncKeyState(VK_UP))
 					cout << "Pulsado arriba" << endl;
-				if (tecla == 2)
+				if (GetAsyncKeyState(VK_DOWN))
 					cout << "Pulsado abajo" << endl;
 
 

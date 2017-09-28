@@ -21,6 +21,7 @@ protected:
 	float aX, aY;
 	bool AfectadoPorPulsacion;
 	Uint32 color;
+	float rozamiento;
 	
 	float ancho, alto;
 
@@ -30,13 +31,15 @@ public:
 		float px, float py, 
 		float vx, float vy,
 		float ax, float ay,
-		float w, float h);
+		float w, float h,
+		float roz);
 	//~ObjetoJuego();
 
 	void setPosicion(float, float);
 	void setVelocidadX(float);
 	void setVelocidadY(float);
-	void setAceleracion(float, float);
+	void setAceleracionX(float);
+	void setAceleracionY(float);
 	void setDimensiones(float, float);
 
 	Uint32 getColor();
@@ -49,6 +52,9 @@ public:
 	float getPosicionY();
 	float getVelocidadX();
 	float getVelocidadY();
+	float getAceleracionX();
+	float getAceleracionY();
+	float getRozamiento();
 
 };
 

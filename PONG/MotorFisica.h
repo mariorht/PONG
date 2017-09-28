@@ -20,6 +20,7 @@ public:
 	//~MotorFisica();
 
 	void Actualiza(int tecla);
+	void Mueve(ObjetoJuego &obj);
 };
 
 

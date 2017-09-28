@@ -1,7 +1,7 @@
 #include "ObjetoJuego.h"
 
 
-ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float ax, float ay, float w, float h)
+ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float ax, float ay, float w, float h, float roz)
 {
 	color = c;
 	posX=px;
@@ -12,8 +12,7 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	aY=ay;
 	ancho=w;
 	alto=h;
-
-
+	rozamiento = roz;
 }
 
 
@@ -26,7 +25,11 @@ Uint32 ObjetoJuego::getColor()
 void ObjetoJuego::setPosicion(float px, float py)
 {
 	posX = px;
-	posY = py;
+	if (py > 950)
+		posY = 950;
+	else if (py < 0)
+		posY = 0;
+	else posY = py;
 
 }
 
@@ -42,9 +45,13 @@ void ObjetoJuego::setVelocidadY(float vy)
 
 }
 
-void ObjetoJuego::setAceleracion(float ax, float ay)
+void ObjetoJuego::setAceleracionX(float ax)
 {
 	aX = ax;
+}
+
+void ObjetoJuego::setAceleracionY(float ay)
+{
 	aY = ay;
 }
 
@@ -94,4 +101,19 @@ float ObjetoJuego::getAlto()
 bool ObjetoJuego::getAfectadoPorPulsacion()
 {
 	return AfectadoPorPulsacion;
+}
+
+float ObjetoJuego::getAceleracionX()
+{
+	return aX;
+}
+
+float ObjetoJuego::getAceleracionY()
+{
+	return aY;
+}
+
+float ObjetoJuego::getRozamiento()
+{
+	return rozamiento;
 }
