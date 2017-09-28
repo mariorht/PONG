@@ -25,6 +25,8 @@ protected:
 	
 	float ancho, alto;
 
+	bool PuedoMeterGol;
+
 public:
 
 	ObjetoJuego(Uint32 color,
@@ -45,6 +47,7 @@ public:
 	Uint32 getColor();
 
 	bool getAfectadoPorPulsacion();
+	bool getPuedoMeterGol();
 
 	float getAncho();
 	float getAlto();

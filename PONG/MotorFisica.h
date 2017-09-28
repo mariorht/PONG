@@ -21,6 +21,7 @@ public:
 
 	void Actualiza(int tecla);
 	void Mueve(ObjetoJuego &obj);
+	bool DetectaColision(ObjetoJuego obj1, ObjetoJuego obj2);
 };
 
 

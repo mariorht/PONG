@@ -13,6 +13,7 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	ancho=w;
 	alto=h;
 	rozamiento = roz;
+	PuedoMeterGol = false;
 }
 
 
@@ -82,12 +83,6 @@ float ObjetoJuego::getVelocidadY()
 }
 
 
-/*
-void ObjetoJuego::Dibuja(SDL_Surface * destination)
-{
-	SDL_BlitSurface(image, NULL, destination, &rect);
-}
-*/
 float ObjetoJuego::getAncho()
 {
 	return ancho;
@@ -116,4 +111,9 @@ float ObjetoJuego::getAceleracionY()
 float ObjetoJuego::getRozamiento()
 {
 	return rozamiento;
+}
+
+bool ObjetoJuego::getPuedoMeterGol()
+{
+	return PuedoMeterGol;
 }

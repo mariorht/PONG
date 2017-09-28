@@ -20,7 +20,7 @@ void Render::DibujaTodo()
 		float w = mis_objetos[i]->getAncho() / 1000.0 *SCREEN_WIDTH;
 		float h = mis_objetos[i]->getAlto() / 1000.0 *SCREEN_WIDTH;
 
-		image = SDL_CreateRGBSurface(0, w * SCREEN_WIDTH / 1000, h * SCREEN_HEIGHT / 1000, 32, 0, 0, 0, 0);
+		image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 
 		SDL_FillRect(image, NULL, mis_objetos[i]->getColor());
 		rect = image->clip_rect;
@@ -28,7 +28,8 @@ void Render::DibujaTodo()
 		rect.x = posicionX;
 		rect.y = posicionY;
 
-
+		
+		
 		DibujaRectangulo();
 	}
 
@@ -36,6 +37,7 @@ void Render::DibujaTodo()
 
 void Render::DibujaRectangulo()
 {
+	
 	SDL_BlitSurface(image, NULL, destination, &rect);
 }
 

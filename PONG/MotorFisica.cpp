@@ -31,6 +31,22 @@ void MotorFisica::Mueve(ObjetoJuego &obj)
 void MotorFisica::Actualiza(int tecla)
 {
 	vector<ObjetoJuego*> mis_objetos = coleccion.getColeccionObjetos();
+
+	for (int i = 0; i < num_objetos; i++)
+	{
+		for (int j = i + 1; j < num_objetos; j++)
+		{
+			if (DetectaColision(*mis_objetos[i], *mis_objetos[j]))
+			{
+				mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
+				mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+
+				mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
+				mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
+			}
+		}
+	}
+
 	for (int i = 0; i < num_objetos; i++)
 	{
 		if (mis_objetos[i]->getAfectadoPorPulsacion())
@@ -74,23 +90,43 @@ void MotorFisica::Actualiza(int tecla)
 		}
 
 		Mueve(*mis_objetos[i]);
+		
 	}
 
-	/*for (int i = 0; i < num_objetos; i++)
-	{
-		for (int j = i+1; j < num_objetos-i; j++)
-		{
-			if (abs((mis_objetos[i]->getPosicionX() - mis_objetos[j]->getPosicionX())< 1) &&
-				abs((mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY()) <1))
-			{
-				mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-				mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
 
-				mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
-				mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
-			}
-		}
-	}
-	*/
 }
 
+bool MotorFisica::DetectaColision(ObjetoJuego o1, ObjetoJuego o2)
+{
+	float borde_izq_o1, borde_dcho_o1, borde_arriba_o1, borde_abajo_o1;
+	borde_izq_o1 = o1.getPosicionX();
+	borde_dcho_o1 = borde_izq_o1 + o1.getAncho();
+	borde_arriba_o1 = o1.getPosicionY();
+	borde_abajo_o1 = borde_arriba_o1 + o1.getAlto();
+
+	float borde_izq_o2, borde_dcho_o2, borde_arriba_o2, borde_abajo_o2;
+	borde_izq_o2 = o2.getPosicionX();
+	borde_dcho_o2 = borde_izq_o2 + o2.getAncho();
+	borde_arriba_o2 = o2.getPosicionY();
+	borde_abajo_o2 = borde_arriba_o2 + o2.getAlto();
+
+	if (borde_abajo_o1 <= borde_arriba_o2)
+	{
+		return false;
+	}
+	if (borde_arriba_o1 >= borde_abajo_o2)
+	{
+		return false;
+	}
+	if (borde_dcho_o1 <= borde_izq_o2)
+	{
+		return false;
+	}
+	if (borde_izq_o1 >= borde_dcho_o2)
+	{
+		return false;
+	}
+
+	return true;
+
+}
