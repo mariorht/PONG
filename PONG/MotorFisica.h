@@ -2,6 +2,12 @@
 #ifndef FISICA_H
 #define FISICA_H
 
+#define NoRebota 0
+#define RebotaAbajo 1
+#define RebotaArriba 2
+#define RebotaDerecha 3
+#define RebotaIzquierda 4
+
 
 #include "Pelota.h"
 #include "ColeccionObjetos.h"
@@ -21,7 +27,9 @@ public:
 
 	void Actualiza(int tecla);
 	void Mueve(ObjetoJuego &obj);
-	bool DetectaColision(ObjetoJuego obj1, ObjetoJuego obj2);
+
+	//Devuelve la parte del objeto 1 que rebotó
+	int DetectaColision(ObjetoJuego obj1, ObjetoJuego obj2);
 };
 
 

@@ -7,6 +7,7 @@
 #include "Raqueta.h"
 #include "Marcador.h"
 #include "LogicaJuego.h"
+#include "Pared.h"
 
 #include <SDL.h>
 
@@ -58,21 +59,35 @@ int main(int arcg, char * args[])
 
 			Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
 			
-			for (int i = 1; i < 4; i++)
+
+			// Crear pelotas
+			for (int i = 1; i < 40; i++)
 			{
-				Pelota *mi_pelota = new Pelota(black, 250*i, 250*i, 5, 10, 0, 0, 50, 50, 0);
+				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 7.5, 10, 0, 0, 40, 40, 0);
 				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
 
-			Raqueta mi_raqueta(black, 50.0, 500.0, 0, 0, 25.0, 200.0, .4);
-			mi_coleccion.AgregaObjeto(&mi_raqueta);
+			//Crear resto de basura
+			Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 100.0, .4);
+			Raqueta mi_raqueta_dcha(black, 950.0, 100.0, 0, 0, 20, 100.0, .4);
+			mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
+			mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 			
+
+
+			//Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
+			//mi_coleccion.AgregaObjeto(&mi_marcador);
+
+			//Pared p_dcha(black, 1000 - 20,40, 20, 900);
+			Pared p_arriba(black, 0, 0, 1000, 20);
+			Pared p_abajo(black, 0, 1000 - 20, 1000, 20);
+			mi_coleccion.AgregaObjeto(&p_abajo);
+			mi_coleccion.AgregaObjeto(&p_arriba);
+			//mi_coleccion.AgregaObjeto(&p_dcha);
+
+			LogicaJuego logicaJuego = LogicaJuego();
 			Render motorRender = Render(mi_coleccion, screen);
 			MotorFisica motorFisica = MotorFisica(mi_coleccion);
-
-			Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
-			mi_coleccion.AgregaObjeto(&mi_marcador);
-			LogicaJuego logicaJuego = LogicaJuego();
 
 			SDL_UpdateWindowSurface(window);
 
@@ -94,7 +109,7 @@ int main(int arcg, char * args[])
 				motorFisica.Actualiza(miIU.DetectaPulsacion());
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
-				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+				//logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
 
 				/*
 				Campo mi_campo = Campo(black, ancho_campo, alto_campo);
@@ -111,7 +126,7 @@ int main(int arcg, char * args[])
 
 
 
-				Sleep(20);
+				Sleep(10);
 
 			}
 

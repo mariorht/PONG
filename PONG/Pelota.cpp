@@ -7,6 +7,7 @@ Pelota::Pelota(Uint32 color, float px, float py, float vx, float vy, float ax, f
 {
 	AfectadoPorPulsacion = false;
 	PuedoMeterGol = true;
+	AfectadoPorChoque = true;
 }
 
 

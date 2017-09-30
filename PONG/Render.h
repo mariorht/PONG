@@ -7,8 +7,8 @@
 #include <SDL.h>
 #include "ColeccionObjetos.h"
 
-#define SCREEN_WIDTH  640
-#define SCREEN_HEIGHT  480
+#define SCREEN_WIDTH  800
+#define SCREEN_HEIGHT 600
 
 
 class Render

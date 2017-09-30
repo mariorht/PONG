@@ -14,6 +14,8 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	alto=h;
 	rozamiento = roz;
 	PuedoMeterGol = false;
+	AfectadoPorPulsacion = false;
+	AfectadoPorChoque = false;
 }
 
 
@@ -26,8 +28,8 @@ Uint32 ObjetoJuego::getColor()
 void ObjetoJuego::setPosicion(float px, float py)
 {
 	posX = px;
-	if (py > 950)
-		posY = 950;
+	if (py > 1000-alto) 
+		posY = 1000 - alto;
 	else if (py < 0)
 		posY = 0;
 	else posY = py;

@@ -28,6 +28,9 @@ protected:
 	bool PuedoMeterGol;
 
 public:
+	bool AfectadoPorChoque; //provisional aquí
+
+
 
 	ObjetoJuego(Uint32 color,
 		float px, float py, 
