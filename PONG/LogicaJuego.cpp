@@ -26,7 +26,7 @@ void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 		if (mis_objetos[i]->getPuedoMeterGol()) 
 		{
-			if ((mis_objetos[i]->getPosicionX()) > 980) //MIRAR TAMAÑO
+			if ((mis_objetos[i]->getPosicionX()) > 940) //MIRAR TAMAÑO
 			{
 				mi_marcador->AumentaGolA();
 				cout << "Gol del equipo A" << endl;

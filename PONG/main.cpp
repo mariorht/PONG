@@ -25,10 +25,6 @@ int main(int arcg, char * args[])
 	SDL_Window* window = NULL;
 	SDL_Surface* screen = NULL;
 
-	
-
-
-
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -97,25 +93,40 @@ int main(int arcg, char * args[])
 			
 
 		// Crear pelotas
-		for (int i = 1; i < 10; i++)
+		for (int i = 1; i < 2; i++)
 		{
-			Pelota *mi_pelota = new Pelota(black, 20*i, 25*i, 10, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+			Pelota *mi_pelota = new Pelota(black, 150*i, 150*i, 10, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
+		
 
 		//Crear resto de basura
 		Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 200.0, .4);
 		Raqueta mi_raqueta_dcha(black, 950.0, 100.0, 0, 0, 20, 200.0, .4);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
-			
+		
 
+		//Inicialización del marcador
 
-		//Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
-		//mi_coleccion.AgregaObjeto(&mi_marcador);
-
-		Pared p_dcha(black, 1000 - 20, 0, 20, 1000);
-		Pared p_izda(black, 0, 0, 20, 1000);
+		Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
+		mi_coleccion.AgregaObjeto(&mi_marcador);
+		int golesA = 0, golesB = 0;
+		string s_golesA, s_golesB;
+	
+		SDL_Renderer *gRenderer_marcador = SDL_CreateRenderer(window, -1, 0);
+		TTF_Font *fuente_marcador = TTF_OpenFont("C:\\Users\\mario\\Desktop\\PONG\\Debug\\Equalize.ttf", 50);
+		SDL_Rect CuadroTexto_marcadorA;
+		CuadroTexto_marcadorA.x = 300.0 / 1000.0 * SCREEN_WIDTH;
+		CuadroTexto_marcadorA.y = 400.0 / 1000.0 * SCREEN_HEIGHT;
+		SDL_Rect CuadroTexto_marcadorB;
+		CuadroTexto_marcadorB.x = 600.0 / 1000.0 * SCREEN_WIDTH;
+		CuadroTexto_marcadorB.y = 400.0 / 1000.0 * SCREEN_HEIGHT;
+		
+		
+		
+		Pared p_dcha(black, 1000 - 20, 100, 20, 1000);
+		Pared p_izda(black, 0, 100, 20, 1000);
 		Pared p_arriba(black, 0, 0, 1000, 20);
 		Pared p_abajo(black, 0, 1000 - 20, 1000, 20);
 		mi_coleccion.AgregaObjeto(&p_abajo);
@@ -165,12 +176,28 @@ int main(int arcg, char * args[])
 				motorFisica.Actualiza(miIU.DetectaPulsacion());
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
-				//logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+				
+				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+
+
+				golesA = mi_marcador.getGolesA();
+				golesB = mi_marcador.getGolesB();
+
+				s_golesA = to_string(golesA);
+				s_golesB = to_string(golesB);
+
+				SDL_Surface *texto_marcadorA = TTF_RenderText_Solid(fuente_marcador,s_golesA.c_str(), negro);
+				SDL_BlitSurface(texto_marcadorA, NULL, screen, &CuadroTexto_marcadorA);
+				SDL_Surface *texto_marcadorB = TTF_RenderText_Solid(fuente_marcador, s_golesB.c_str(), negro);
+				SDL_BlitSurface(texto_marcadorB, NULL, screen, &CuadroTexto_marcadorB);
+				SDL_RenderPresent(gRenderer_marcador);
 
 				/*
 				Campo mi_campo = Campo(black, ancho_campo, alto_campo);
 				mi_coleccion.AgregaObjeto(&mi_campo);
 				*/
+
+				
 
 				SDL_UpdateWindowSurface(window);
 

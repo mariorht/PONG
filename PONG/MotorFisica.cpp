@@ -32,6 +32,7 @@ void MotorFisica::Mueve(ObjetoJuego &obj)
 void MotorFisica::Actualiza(int tecla)
 {
 	vector<ObjetoJuego*> mis_objetos = coleccion.getColeccionObjetos();
+	num_objetos = coleccion.getTamColeccion();
 
 	for (int i = 0; i < num_objetos; i++)
 	{
@@ -140,17 +141,36 @@ void MotorFisica::Actualiza(int tecla)
 	{
 		if (mis_objetos[i]->getAfectadoPorPulsacion())
 		{
-			if (tecla == ARRIBA)
-				mis_objetos[i]->setAceleracionY(-5.0);
-			else if (tecla == ABAJO)
-				mis_objetos[i]->setAceleracionY(+5.0);
-			else
+			if(mis_objetos[i]->getPosicionX()>500)
 			{
-				float roz = mis_objetos[i]->getRozamiento();
-				float vy = mis_objetos[i]->getVelocidadY();
+				if (tecla == ARRIBA)
+					mis_objetos[i]->setAceleracionY(-5.0);
+				else if (tecla == ABAJO)
+					mis_objetos[i]->setAceleracionY(+5.0);
+				else
+				{
+					float roz = mis_objetos[i]->getRozamiento();
+					float vy = mis_objetos[i]->getVelocidadY();
 
-				mis_objetos[i]->setAceleracionY(-roz*vy);
+					mis_objetos[i]->setAceleracionY(-roz*vy);
+				}
 			}
+
+			if (mis_objetos[i]->getPosicionX()<500)
+			{
+				if (tecla == TECLA_W)
+					mis_objetos[i]->setAceleracionY(-5.0);
+				else if (tecla == TECLA_S)
+					mis_objetos[i]->setAceleracionY(+5.0);
+				else
+				{
+					float roz = mis_objetos[i]->getRozamiento();
+					float vy = mis_objetos[i]->getVelocidadY();
+
+					mis_objetos[i]->setAceleracionY(-roz*vy);
+				}
+			}
+			
 		}
 
 		Mueve(*mis_objetos[i]);
