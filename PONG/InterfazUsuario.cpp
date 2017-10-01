@@ -22,6 +22,10 @@ int InterfazUsuario::DetectaPulsacion()
 		return  IZQUIERDA;
 	if (GetAsyncKeyState(VK_RIGHT))
 		return DERECHA;
+	if (GetAsyncKeyState(VK_RETURN))
+		return ENTER;
+
+
 
 
 

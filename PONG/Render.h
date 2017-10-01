@@ -5,6 +5,7 @@
 #include "Pelota.h"
 #include <Windows.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "ColeccionObjetos.h"
 
 #define SCREEN_WIDTH  800
@@ -16,7 +17,7 @@ class Render
 protected:
 	ColeccionObjetos coleccion;
 	int num_objetos;
-	SDL_Surface *destination;
+	SDL_Surface *destination; //Pantalla donde pintar
 	SDL_Surface *image;
 	SDL_Rect rect;
 
@@ -29,6 +30,8 @@ public:
 	void DibujaTodo();
 
 	void BorraPantalla();
+
+	void PintarMenu();
 
 
 };

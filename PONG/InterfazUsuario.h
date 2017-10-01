@@ -6,6 +6,7 @@
 #define ABAJO 2
 #define IZQUIERDA 3
 #define DERECHA 4
+#define ENTER 5
 
 class InterfazUsuario
 {

@@ -56,3 +56,12 @@ void Render::BorraPantalla()
 {
 	SDL_FillRect(destination, NULL, SDL_MapRGB(destination->format, 0xFF, 0xFF, 0xFF));
 }
+
+
+void Render::PintarMenu()
+{
+	
+	
+
+	
+}
