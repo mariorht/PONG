@@ -21,17 +21,25 @@ void Render::DibujaTodo()
 		float w = mis_objetos[i]->getAncho() / 1000.0 *SCREEN_WIDTH;
 		float h = mis_objetos[i]->getAlto() / 1000.0 *SCREEN_HEIGHT;
 
-		image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+			//Quizá meterlo en DibujaRectangulo
+		if (mis_objetos[i]->Forma == "rectangulo")
+		{
+			image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+			SDL_FillRect(image, NULL, mis_objetos[i]->getColor());
+		}
+		else if (mis_objetos[i]->Forma == "circulo")
+		{
+			image = SDL_LoadBMP("dot.bmp");
+		}
 
-		SDL_FillRect(image, NULL, mis_objetos[i]->getColor());
-		rect = image->clip_rect;
+			rect = image->clip_rect;
 
-		rect.x = posicionX;
-		rect.y = posicionY;
+			rect.x = posicionX;
+			rect.y = posicionY;
 
-		
-		
-		DibujaRectangulo();
+			DibujaRectangulo();
+
+
 	}
 
 }

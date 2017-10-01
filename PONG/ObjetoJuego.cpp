@@ -16,6 +16,7 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	PuedoMeterGol = false;
 	AfectadoPorPulsacion = false;
 	AfectadoPorChoque = false;
+	Forma = "rectangulo";
 }
 
 
@@ -25,16 +26,28 @@ Uint32 ObjetoJuego::getColor()
 	return color;
 }
 
-void ObjetoJuego::setPosicion(float px, float py)
+void ObjetoJuego::setPosicionX(float px)
 {
-	posX = px;
-	if (py > 1000-alto) 
+	if (px > 1000-ancho) 
+		posX = 1000 - ancho;
+	else if (px < 0)
+		posX = 0;
+	else posX = px;
+
+}
+
+void ObjetoJuego::setPosicionY(float py)
+{
+	
+	if (py > 1000 - alto)
 		posY = 1000 - alto;
 	else if (py < 0)
 		posY = 0;
 	else posY = py;
 
 }
+
+
 
 void ObjetoJuego::setVelocidadX(float vx)
 {

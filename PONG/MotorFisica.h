@@ -12,6 +12,7 @@
 #include "Pelota.h"
 #include "ColeccionObjetos.h"
 #include "InterfazUsuario.h"
+#include <math.h>
 
 
 

@@ -61,15 +61,15 @@ int main(int arcg, char * args[])
 			
 
 			// Crear pelotas
-			for (int i = 1; i < 40; i++)
+			for (int i = 1; i < 10; i++)
 			{
-				Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 7.5, 10, 0, 0, 40, 40, 0);
+				Pelota *mi_pelota = new Pelota(black, 20*i, 25*i, 10, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 				mi_coleccion.AgregaObjeto(mi_pelota);
 			}
 
 			//Crear resto de basura
-			Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 100.0, .4);
-			Raqueta mi_raqueta_dcha(black, 950.0, 100.0, 0, 0, 20, 100.0, .4);
+			Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 200.0, .4);
+			Raqueta mi_raqueta_dcha(black, 950.0, 100.0, 0, 0, 20, 200.0, .4);
 			mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 			mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 			
@@ -78,12 +78,14 @@ int main(int arcg, char * args[])
 			//Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
 			//mi_coleccion.AgregaObjeto(&mi_marcador);
 
-			//Pared p_dcha(black, 1000 - 20,40, 20, 900);
+			Pared p_dcha(black, 1000 - 20, 0, 20, 1000);
+			Pared p_izda(black, 0, 0, 20, 1000);
 			Pared p_arriba(black, 0, 0, 1000, 20);
 			Pared p_abajo(black, 0, 1000 - 20, 1000, 20);
 			mi_coleccion.AgregaObjeto(&p_abajo);
 			mi_coleccion.AgregaObjeto(&p_arriba);
-			//mi_coleccion.AgregaObjeto(&p_dcha);
+			mi_coleccion.AgregaObjeto(&p_dcha);
+			mi_coleccion.AgregaObjeto(&p_izda);
 
 			LogicaJuego logicaJuego = LogicaJuego();
 			Render motorRender = Render(mi_coleccion, screen);

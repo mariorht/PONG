@@ -25,7 +25,8 @@ void MotorFisica::Mueve(ObjetoJuego &obj)
 
 	obj.setVelocidadX(vx);
 	obj.setVelocidadY(vy);
-	obj.setPosicion(px + vx, py + vy);
+	obj.setPosicionX(px + vx);
+	obj.setPosicionY(py + vy);
 }
 
 void MotorFisica::Actualiza(int tecla)
@@ -37,36 +38,100 @@ void MotorFisica::Actualiza(int tecla)
 		for (int j = i + 1; j < num_objetos; j++)
 		{
 			int colision = DetectaColision(*mis_objetos[i], *mis_objetos[j]);
-			if (colision == RebotaArriba ||
-				colision ==  RebotaAbajo)
+
+			if (mis_objetos[i]->Forma == "rectangulo" ||
+				mis_objetos[j]->Forma == "rectangulo")
 			{
-				//mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-				//mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
-				if (mis_objetos[i]->AfectadoPorChoque)
+				if (colision == RebotaArriba )
 				{
-					mis_objetos[i]->setVelocidadY(- mis_objetos[i]->getVelocidadY());
-					
-					
+					//mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
+					//mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+					if (mis_objetos[i]->AfectadoPorChoque)
+					{
+						mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
+						mis_objetos[i]->setPosicionY(mis_objetos[i]->getPosicionY() + 20);
+					}
+
+
+					if (mis_objetos[j]->AfectadoPorChoque)
+					{
+						mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
+						mis_objetos[j]->setPosicionY(mis_objetos[j]->getPosicionY() - 20);
+					}
+
 				}
 
-				if (mis_objetos[j]->AfectadoPorChoque)
+				if (colision == RebotaAbajo)
 				{
-					mis_objetos[j]->setVelocidadY(- mis_objetos[j]->getVelocidadY());
-					
+					//mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
+					//mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+					if (mis_objetos[i]->AfectadoPorChoque)
+					{
+						mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
+						mis_objetos[i]->setPosicionY(mis_objetos[i]->getPosicionY()-20);
+					}
+
+
+					if (mis_objetos[j]->AfectadoPorChoque)
+					{
+						mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
+						mis_objetos[j]->setPosicionY(mis_objetos[j]->getPosicionY() + 20);
+					}
+
 				}
-				
+
+				else if (colision == RebotaIzquierda)
+				{
+					if (mis_objetos[i]->AfectadoPorChoque)
+					{
+						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
+						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() + 20);
+					}
+					if (mis_objetos[j]->AfectadoPorChoque)
+					{
+						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() - 20);
+
+					}
+				}
+
+				else if (	colision == RebotaDerecha)
+				{
+					if (mis_objetos[i]->AfectadoPorChoque)
+					{
+						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
+						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() - 20);
+					}
+					if (mis_objetos[j]->AfectadoPorChoque)
+					{
+						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() + 20);
+					}
+				}
 			}
 
-			else if (colision == RebotaIzquierda ||
-				colision == RebotaDerecha)
+			else if (colision > 0 && mis_objetos[i]->Forma == "circulo" && mis_objetos[j]->Forma == "circulo")
 			{
-				if (mis_objetos[i]->AfectadoPorChoque)
-					mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-				if (mis_objetos[j]->AfectadoPorChoque)
-					mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
+				double dx = (mis_objetos[i]->getPosicionX()) -(mis_objetos[j]->getPosicionX());
+				double dy = mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY();
 
-				//mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
-				//mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
+				//Revisar por qué no unitario
+				float dx_2 = dx / sqrt(dx*dx + dy*dy);
+				float dy_2 = dy / sqrt(dx*dx + dy*dy);
+
+
+				float v = sqrt(mis_objetos[i]->getVelocidadX() * mis_objetos[i]->getVelocidadX() +
+					mis_objetos[i]->getVelocidadY() *mis_objetos[i]->getVelocidadY());
+
+				//Actualmente para la misma velocidad las dos bolas
+				mis_objetos[i]->setVelocidadX(dx_2*v);
+				mis_objetos[i]->setVelocidadY(dy_2*v);
+
+				 v = sqrt(mis_objetos[i]->getVelocidadX() * mis_objetos[i]->getVelocidadX() +
+					mis_objetos[i]->getVelocidadY() *mis_objetos[i]->getVelocidadY());
+
+				mis_objetos[j]->setVelocidadX(-dx_2*v);
+				mis_objetos[j]->setVelocidadY(-dy_2*v);
 			}
 		}
 	}

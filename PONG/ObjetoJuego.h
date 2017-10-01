@@ -28,6 +28,7 @@ protected:
 	bool PuedoMeterGol;
 
 public:
+	string Forma;
 	bool AfectadoPorChoque; //provisional aquí
 
 
@@ -40,7 +41,8 @@ public:
 		float roz);
 	//~ObjetoJuego();
 
-	void setPosicion(float, float);
+	void setPosicionX(float);
+	void setPosicionY(float);
 	void setVelocidadX(float);
 	void setVelocidadY(float);
 	void setAceleracionX(float);
