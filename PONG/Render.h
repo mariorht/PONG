@@ -8,8 +8,8 @@
 #include <SDL_ttf.h>
 #include "ColeccionObjetos.h"
 
-#define SCREEN_WIDTH  800
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH  600
+#define SCREEN_HEIGHT 600
 
 
 class Render
@@ -22,6 +22,7 @@ protected:
 	SDL_Rect rect;
 
 
+
 public:
 	Render(ColeccionObjetos objetos, SDL_Surface *d);
 	//~Render();
@@ -31,7 +32,7 @@ public:
 
 	void BorraPantalla();
 
-	void PintarMenu();
+	void Escribe(SDL_Window *window, string texto, SDL_Color color, string fuente, float tam_fuente, float pos_x, float pos_y);
 
 
 };

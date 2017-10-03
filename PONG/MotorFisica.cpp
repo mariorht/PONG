@@ -86,12 +86,12 @@ void MotorFisica::Actualiza(int tecla)
 					if (mis_objetos[i]->AfectadoPorChoque)
 					{
 						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() + 20);
+						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() + 10);
 					}
 					if (mis_objetos[j]->AfectadoPorChoque)
 					{
 						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
-						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() - 20);
+						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() - 10);
 
 					}
 				}
@@ -101,12 +101,12 @@ void MotorFisica::Actualiza(int tecla)
 					if (mis_objetos[i]->AfectadoPorChoque)
 					{
 						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() - 20);
+						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() - 10);
 					}
 					if (mis_objetos[j]->AfectadoPorChoque)
 					{
 						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
-						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() + 20);
+						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() + 10);
 					}
 				}
 			}

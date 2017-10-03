@@ -14,11 +14,20 @@
 #include <SDL_ttf.h>
 
 
-#include <stdio.h>
+
 
 
 #define Menu 1
-#define Juego 2
+#define ModosJuego 2
+
+#define ModoUnJugador 3
+#define ModoDosJugadores 4
+#define ModoCaos 5
+
+#define JuegoUnJugador 6
+#define JuegoDosJugadores 7
+#define JuegoCaos 8
+
 
 
 
@@ -64,31 +73,7 @@ int main(int arcg, char * args[])
 		//Update the surface
 		SDL_UpdateWindowSurface(window);
 			
-		//MENU----------------------
-		
-		SDL_Renderer *gRenderer=SDL_CreateRenderer(window, -1, 0);
-		SDL_Color negro = { 0, 0, 0, 0 };
-		
-		TTF_Font *fuente = TTF_OpenFont("C:\\Users\\mario\\Desktop\\PONG\\Debug\\Equalize.ttf", 70);
-		SDL_Surface *texto = TTF_RenderText_Solid(fuente, "PONG", negro);
-		
-		TTF_Font *fuente2 = TTF_OpenFont("C:\\Users\\mario\\Desktop\\PONG\\Debug\\Equalize.ttf", 18);
-		SDL_Surface *texto2 = TTF_RenderText_Solid(fuente2, "Pulsa ENTER para jugar", negro);
-		
-		SDL_Rect CuadroTexto;
-		CuadroTexto.x = 300.0 / 1000.0 * SCREEN_WIDTH;
-		CuadroTexto.y = 400.0 / 1000.0 * SCREEN_HEIGHT;
-
-		SDL_Rect CuadroTexto2;
-		CuadroTexto2.x = 225.0 / 1000.0 * SCREEN_WIDTH;
-		CuadroTexto2.y = 650.0 / 1000.0 * SCREEN_HEIGHT;
-
-		SDL_BlitSurface(texto, NULL, screen, &CuadroTexto);
-		SDL_BlitSurface(texto2, NULL, screen, &CuadroTexto2);
-		SDL_RenderPresent(gRenderer);
-
-		//----------------------
-
+	
 		//Vector de objetos
 		ColeccionObjetos mi_coleccion = ColeccionObjetos();
 
@@ -98,7 +83,7 @@ int main(int arcg, char * args[])
 		// Crear pelotas
 		for (int i = 1; i <2; i++)
 		{
-			mi_pelota = new Pelota(black, 25*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+			mi_pelota = new Pelota(black, 55*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
 
@@ -112,24 +97,6 @@ int main(int arcg, char * args[])
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 
 		InteligenciaArtificial miIA(&mi_raqueta_izq);
-		
-		
-
-		//Inicialización del marcador
-
-		Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
-		mi_coleccion.AgregaObjeto(&mi_marcador);
-		int golesA = 0, golesB = 0;
-		string s_golesA, s_golesB;
-	
-		SDL_Renderer *gRenderer_marcador = SDL_CreateRenderer(window, -1, 0);
-		TTF_Font *fuente_marcador = TTF_OpenFont("C:\\Users\\mario\\Desktop\\PONG\\Debug\\Equalize.ttf", 50);
-		SDL_Rect CuadroTexto_marcadorA;
-		CuadroTexto_marcadorA.x = 300.0 / 1000.0 * SCREEN_WIDTH;
-		CuadroTexto_marcadorA.y = 400.0 / 1000.0 * SCREEN_HEIGHT;
-		SDL_Rect CuadroTexto_marcadorB;
-		CuadroTexto_marcadorB.x = 600.0 / 1000.0 * SCREEN_WIDTH;
-		CuadroTexto_marcadorB.y = 400.0 / 1000.0 * SCREEN_HEIGHT;
 		
 		
 		
@@ -146,15 +113,35 @@ int main(int arcg, char * args[])
 		Render motorRender = Render(mi_coleccion, screen);
 		MotorFisica motorFisica = MotorFisica(mi_coleccion);
 
-		SDL_UpdateWindowSurface(window);
+		//Inicialización del marcador
+
+		Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
+		mi_coleccion.AgregaObjeto(&mi_marcador);
+		int golesA = 0, golesB = 0;
+		string s_golesA, s_golesB;
+
+		//Inicialización parámetros escritura
+		string fuente = "Equalize.ttf";
+		string fuente_menu = "Flying Bird.ttf";
+		float tam_fuente_titulo = 70;
+		float tam_fuente_menu = 50;
+		float tam_fuente_marcador = 50;
+		SDL_Color negro = { 0, 0, 0, 0 };
+		SDL_Color azul = { 96, 111, 140, 0 };
+
+
+
 
 		InterfazUsuario miIU;
 
 		//Flag bucle
 		bool cerrar = FALSE;
+		// Flag menu
+		bool recien_entrado = true;
 		SDL_Event e;
 
 		int estado = Menu;
+		int modo = ModoUnJugador;
 
 
 
@@ -174,17 +161,130 @@ int main(int arcg, char * args[])
 
 			case Menu: 
 			{
+				motorRender.Escribe(window, "PONG", negro, fuente, 70, 300, 400);
+				motorRender.Escribe(window, "Pulsa ENTER para continuar", negro, fuente, 18, 225, 650);
 				if (miIU.DetectaPulsacion() == ENTER)
-					estado = Juego;
+				{
+					estado = ModosJuego;
+					SDL_Delay(150);
+				}
 			
 			}break;
 
-
-			case Juego:
+			case ModosJuego:
 			{
+
+				switch (modo)
+				{
+				case ModoUnJugador:
+				{
+					if (recien_entrado)
+					{
+						recien_entrado = false;
+						motorRender.BorraPantalla();
+						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
+						motorRender.Escribe(window, "Un jugador", azul, fuente_menu, tam_fuente_menu, 225, 650);
+						motorRender.Escribe(window, "Dos jugadores", negro, fuente_menu, tam_fuente_menu, 225, 750);
+						motorRender.Escribe(window, "Modo caos (Dos jugadores)", negro, fuente_menu, tam_fuente_menu, 225, 850);
+					}
+
+					if (miIU.DetectaPulsacion() == ENTER)
+					{
+						estado = JuegoUnJugador;
+						recien_entrado = true;
+						SDL_Delay(150);
+					}
+					if (miIU.DetectaPulsacion() == ARRIBA)
+					{
+						recien_entrado = true;
+						modo = ModoCaos;
+						SDL_Delay(150);
+					}
+					if (miIU.DetectaPulsacion() == ABAJO)
+					{
+						recien_entrado = true;
+						modo = ModoDosJugadores;
+						SDL_Delay(150);
+					}
+				}break;
+
+
+				case ModoDosJugadores:
+				{
+					if (recien_entrado)
+					{
+						recien_entrado = false;
+						motorRender.BorraPantalla();
+						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
+						motorRender.Escribe(window, "Un jugador", negro, fuente_menu, tam_fuente_menu, 225, 650);
+						motorRender.Escribe(window, "Dos jugadores", azul, fuente_menu, tam_fuente_menu, 225, 750);
+						motorRender.Escribe(window, "Modo caos (Dos jugadores)", negro, fuente_menu, tam_fuente_menu, 225, 850);
+					}
+
+					if (miIU.DetectaPulsacion() == ENTER)
+					{
+						estado = JuegoDosJugadores;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+					if (miIU.DetectaPulsacion() == ARRIBA)
+					{
+						modo = ModoUnJugador;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+					if (miIU.DetectaPulsacion() == ABAJO)
+					{
+						modo = ModoCaos;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+
+				}break;
+
+				case ModoCaos:
+				{
+					if (recien_entrado)
+					{
+						recien_entrado = false;
+						motorRender.BorraPantalla();
+						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
+						motorRender.Escribe(window, "Un jugador", negro, fuente_menu, tam_fuente_menu, 225, 650);
+						motorRender.Escribe(window, "Dos jugadores", negro, fuente_menu, tam_fuente_menu, 225, 750);
+						motorRender.Escribe(window, "Modo caos (Dos jugadores)", azul, fuente_menu, tam_fuente_menu, 225, 850);
+					}
+
+					if (miIU.DetectaPulsacion() == ENTER)
+					{
+						estado = JuegoCaos;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+
+					if (miIU.DetectaPulsacion() == ARRIBA)
+					{
+						modo = ModoDosJugadores;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+					if (miIU.DetectaPulsacion() == ABAJO)
+					{
+						modo = ModoUnJugador;
+						SDL_Delay(150);
+						recien_entrado = true;
+					}
+
+				}break;
+				}
+
+			}break;
+
+			case JuegoUnJugador:
+			{
+				motorRender.BorraPantalla();
 				miIA.EligeMovimiento(mi_pelota);
 				motorFisica.Actualiza(miIU.DetectaPulsacion());
-				motorRender.BorraPantalla();
+
 				motorRender.DibujaTodo();
 				
 				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
@@ -196,17 +296,8 @@ int main(int arcg, char * args[])
 				s_golesA = to_string(golesA);
 				s_golesB = to_string(golesB);
 
-
-				SDL_Surface *texto_marcadorA;
-				SDL_Surface *texto_marcadorB;
-				texto_marcadorA = TTF_RenderText_Solid(fuente_marcador,s_golesA.c_str(), negro);
-				SDL_BlitSurface(texto_marcadorA, NULL, screen, &CuadroTexto_marcadorA);
-				texto_marcadorB = TTF_RenderText_Solid(fuente_marcador, s_golesB.c_str(), negro);
-				SDL_BlitSurface(texto_marcadorB, NULL, screen, &CuadroTexto_marcadorB);
-				SDL_RenderPresent(gRenderer_marcador);
-
-				SDL_FreeSurface(texto_marcadorA);
-				SDL_FreeSurface(texto_marcadorB);
+				motorRender.Escribe(window, s_golesA, negro, fuente, tam_fuente_marcador, 300, 400);
+				motorRender.Escribe(window, s_golesB, negro, fuente, tam_fuente_marcador, 600, 400);
 
 
 
@@ -222,6 +313,8 @@ int main(int arcg, char * args[])
 
 			} break;
 
+			case JuegoDosJugadores:
+				break;
 			}
 
 				
