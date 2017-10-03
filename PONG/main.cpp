@@ -8,6 +8,7 @@
 #include "Marcador.h"
 #include "LogicaJuego.h"
 #include "Pared.h"
+#include "InteligenciaArtificial.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -93,20 +94,25 @@ int main(int arcg, char * args[])
 
 		Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
 			
-
+		Pelota *mi_pelota;
 		// Crear pelotas
-		for (int i = 1; i <40; i++)
+		for (int i = 1; i <2; i++)
 		{
-			Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+			mi_pelota = new Pelota(black, 25*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
+
+
 		
 
 		//Crear resto de basura
-		Raqueta mi_raqueta_izq(black, 50.0, 500.0, 0, 0, 20, 200.0, .4);
-		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .4);
+		Raqueta mi_raqueta_izq(black, 50.0, 00.0, 0, 0, 20, 150.0, .1, true);
+		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .4, false);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
+
+		InteligenciaArtificial miIA(&mi_raqueta_izq);
+		
 		
 
 		//Inicialización del marcador
@@ -176,12 +182,12 @@ int main(int arcg, char * args[])
 
 			case Juego:
 			{
-
+				miIA.EligeMovimiento(mi_pelota);
 				motorFisica.Actualiza(miIU.DetectaPulsacion());
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
 				
-				//logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
 
 
 				golesA = mi_marcador.getGolesA();

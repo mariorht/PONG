@@ -51,6 +51,9 @@
     <ClCompile Include="Marcador.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="InteligenciaArtificial.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjetoJuego.h">
@@ -84,6 +87,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Marcador.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="InteligenciaArtificial.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

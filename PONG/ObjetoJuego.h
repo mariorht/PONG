@@ -43,8 +43,8 @@ public:
 
 	void setPosicionX(float);
 	void setPosicionY(float);
-	void setVelocidadX(float);
-	void setVelocidadY(float);
+	virtual void setVelocidadX(float);
+	virtual void setVelocidadY(float);
 	void setAceleracionX(float);
 	void setAceleracionY(float);
 	void setDimensiones(float, float);

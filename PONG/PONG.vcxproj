@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="Campo.cpp" />
     <ClCompile Include="ColeccionObjetos.cpp" />
+    <ClCompile Include="InteligenciaArtificial.cpp" />
     <ClCompile Include="InterfazUsuario.cpp" />
     <ClCompile Include="LogicaJuego.cpp" />
     <ClCompile Include="main.cpp" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Campo.h" />
     <ClInclude Include="ColeccionObjetos.h" />
+    <ClInclude Include="InteligenciaArtificial.h" />
     <ClInclude Include="InterfazUsuario.h" />
     <ClInclude Include="LogicaJuego.h" />
     <ClInclude Include="Marcador.h" />
