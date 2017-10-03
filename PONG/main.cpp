@@ -20,6 +20,8 @@
 #define Juego 2
 
 
+
+
 int main(int arcg, char * args[])
 {
 	SDL_Window* window = NULL;
@@ -54,7 +56,7 @@ int main(int arcg, char * args[])
 	{
 		//Get window surface
 		screen = SDL_GetWindowSurface(window);
-
+		
 		//Fill the surface white
 		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
 
@@ -93,16 +95,16 @@ int main(int arcg, char * args[])
 			
 
 		// Crear pelotas
-		for (int i = 1; i < 2; i++)
+		for (int i = 1; i <40; i++)
 		{
-			Pelota *mi_pelota = new Pelota(black, 150*i, 150*i, 10, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+			Pelota *mi_pelota = new Pelota(black, 25*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
 		
 
 		//Crear resto de basura
-		Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 200.0, .4);
-		Raqueta mi_raqueta_dcha(black, 950.0, 100.0, 0, 0, 20, 200.0, .4);
+		Raqueta mi_raqueta_izq(black, 50.0, 500.0, 0, 0, 20, 200.0, .4);
+		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .4);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 		
@@ -148,6 +150,8 @@ int main(int arcg, char * args[])
 
 		int estado = Menu;
 
+
+
 		while (!cerrar)
 		{
 
@@ -177,7 +181,7 @@ int main(int arcg, char * args[])
 				motorRender.BorraPantalla();
 				motorRender.DibujaTodo();
 				
-				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+				//logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
 
 
 				golesA = mi_marcador.getGolesA();
@@ -186,25 +190,30 @@ int main(int arcg, char * args[])
 				s_golesA = to_string(golesA);
 				s_golesB = to_string(golesB);
 
-				SDL_Surface *texto_marcadorA = TTF_RenderText_Solid(fuente_marcador,s_golesA.c_str(), negro);
+
+				SDL_Surface *texto_marcadorA;
+				SDL_Surface *texto_marcadorB;
+				texto_marcadorA = TTF_RenderText_Solid(fuente_marcador,s_golesA.c_str(), negro);
 				SDL_BlitSurface(texto_marcadorA, NULL, screen, &CuadroTexto_marcadorA);
-				SDL_Surface *texto_marcadorB = TTF_RenderText_Solid(fuente_marcador, s_golesB.c_str(), negro);
+				texto_marcadorB = TTF_RenderText_Solid(fuente_marcador, s_golesB.c_str(), negro);
 				SDL_BlitSurface(texto_marcadorB, NULL, screen, &CuadroTexto_marcadorB);
 				SDL_RenderPresent(gRenderer_marcador);
+
+				SDL_FreeSurface(texto_marcadorA);
+				SDL_FreeSurface(texto_marcadorB);
+
+
+
+				
 
 				/*
 				Campo mi_campo = Campo(black, ancho_campo, alto_campo);
 				mi_coleccion.AgregaObjeto(&mi_campo);
 				*/
 
-				
-
+			
 				SDL_UpdateWindowSurface(window);
 
-				if (GetAsyncKeyState(VK_UP))
-					cout << "Pulsado arriba" << endl;
-				if (GetAsyncKeyState(VK_DOWN))
-					cout << "Pulsado abajo" << endl;
 			} break;
 
 			}

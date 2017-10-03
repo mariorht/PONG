@@ -9,7 +9,7 @@
 #include "ColeccionObjetos.h"
 
 #define SCREEN_WIDTH  800
-#define SCREEN_HEIGHT 600
+#define SCREEN_HEIGHT 800
 
 
 class Render

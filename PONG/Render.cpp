@@ -38,6 +38,7 @@ void Render::DibujaTodo()
 			rect.y = posicionY;
 
 			DibujaRectangulo();
+			SDL_FreeSurface(image);
 
 
 	}

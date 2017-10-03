@@ -116,7 +116,7 @@ void MotorFisica::Actualiza(int tecla)
 				double dx = (mis_objetos[i]->getPosicionX()) -(mis_objetos[j]->getPosicionX());
 				double dy = mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY();
 
-				//Revisar por qué no unitario
+				
 				float dx_2 = dx / sqrt(dx*dx + dy*dy);
 				float dy_2 = dy / sqrt(dx*dx + dy*dy);
 
