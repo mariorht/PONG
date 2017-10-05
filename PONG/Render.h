@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "ColeccionObjetos.h"
+#include "Menu.h"
 
 #define SCREEN_WIDTH  600
 #define SCREEN_HEIGHT 600
@@ -15,7 +16,7 @@
 class Render
 {
 protected:
-	ColeccionObjetos coleccion;
+	ColeccionObjetos *coleccion;
 	int num_objetos;
 	SDL_Surface *destination; //Pantalla donde pintar
 	SDL_Surface *image;
@@ -24,7 +25,7 @@ protected:
 
 
 public:
-	Render(ColeccionObjetos objetos, SDL_Surface *d);
+	Render(ColeccionObjetos *objetos, SDL_Surface *d);
 	//~Render();
 
 	void DibujaRectangulo();
@@ -32,7 +33,7 @@ public:
 
 	void BorraPantalla();
 
-	void Escribe(SDL_Window *window, string texto, SDL_Color color, string fuente, float tam_fuente, float pos_x, float pos_y);
+	void Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y);
 
 
 };

@@ -2,37 +2,37 @@
 
 
 
-MotorFisica::MotorFisica(ColeccionObjetos objetos) : coleccion(objetos),
-	num_objetos(coleccion.getTamColeccion()) {}
+MotorFisica::MotorFisica(ColeccionObjetos *objetos) : coleccion(objetos),
+	num_objetos(coleccion->getTamColeccion()) {}
 
 
-void MotorFisica::Mueve(ObjetoJuego &obj)
+void MotorFisica::Mueve(ObjetoJuego *obj)
 {
 	float px, py;
-	px = obj.getPosicionX();
-	py = obj.getPosicionY();
+	px = obj->getPosicionX();
+	py = obj->getPosicionY();
 
 	float vx, vy;
-	vx = obj.getVelocidadX();
-	vy = obj.getVelocidadY();
+	vx = obj->getVelocidadX();
+	vy = obj->getVelocidadY();
 
 	float ax, ay;
-	ax = obj.getAceleracionX();
-	ay = obj.getAceleracionY();
+	ax = obj->getAceleracionX();
+	ay = obj->getAceleracionY();
 
 	vx += ax;
 	vy += ay;
 
-	obj.setVelocidadX(vx);
-	obj.setVelocidadY(vy);
-	obj.setPosicionX(px + vx);
-	obj.setPosicionY(py + vy);
+	obj->setVelocidadX(vx);
+	obj->setVelocidadY(vy);
+	obj->setPosicionX(px + vx);
+	obj->setPosicionY(py + vy);
 }
 
 void MotorFisica::Actualiza(int tecla)
 {
-	vector<ObjetoJuego*> mis_objetos = coleccion.getColeccionObjetos();
-	num_objetos = coleccion.getTamColeccion();
+	vector<ObjetoJuego*> mis_objetos = coleccion->getColeccionObjetos();
+	num_objetos = coleccion->getTamColeccion();
 
 	for (int i = 0; i < num_objetos; i++)
 	{
@@ -116,7 +116,15 @@ void MotorFisica::Actualiza(int tecla)
 				double dx = (mis_objetos[i]->getPosicionX()) -(mis_objetos[j]->getPosicionX());
 				double dy = mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY();
 
-				
+				try
+				{
+					float deno = sqrt(dx*dx + dy*dy);
+					if (deno = 0) throw - 1;
+				}
+				catch (int x)
+				{
+					cout << "ERROR: division por 0";
+				}
 				float dx_2 = dx / sqrt(dx*dx + dy*dy);
 				float dy_2 = dy / sqrt(dx*dx + dy*dy);
 
@@ -173,8 +181,9 @@ void MotorFisica::Actualiza(int tecla)
 			
 		}
 
-		Mueve(*mis_objetos[i]);
-		
+
+		Mueve(mis_objetos[i]);
+	
 	}
 
 

@@ -20,7 +20,7 @@ void InteligenciaArtificial::EligeMovimiento(ObjetoJuego * p)
 	float distanciaX = p->getPosicionX() - mi_raqueta->getPosicionX();
 
 	float distancia_con_centro = 500 - (mi_raqueta->getPosicionY() + mi_raqueta->getAlto() / 2);
-	if (distanciaX<500)
+	if (abs(distanciaX)<500)
 	{
 		if (distanciaY > mi_raqueta->getAlto() / 2)
 			mi_raqueta->setAceleracionY(2);

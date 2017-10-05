@@ -1,4 +1,3 @@
-
 #include "ObjetoJuego.h"
 #include "Render.h"
 #include "Pelota.h"
@@ -17,7 +16,7 @@
 
 
 
-#define Menu 1
+#define MenuInicio 1
 #define ModosJuego 2
 
 #define ModoUnJugador 3
@@ -27,6 +26,7 @@
 #define JuegoUnJugador 6
 #define JuegoDosJugadores 7
 #define JuegoCaos 8
+#define Jugando 9
 
 
 
@@ -91,12 +91,12 @@ int main(int arcg, char * args[])
 		
 
 		//Crear resto de basura
-		Raqueta mi_raqueta_izq(black, 50.0, 00.0, 0, 0, 20, 150.0, .1, true);
-		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .4, false);
+		Raqueta mi_raqueta_izq(black, 50.0, 00.0, 0, 0, 20, 150.0, .1);
+		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .1);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 
-		InteligenciaArtificial miIA(&mi_raqueta_izq);
+		InteligenciaArtificial miIA(&mi_raqueta_dcha);
 		
 		
 		
@@ -110,8 +110,8 @@ int main(int arcg, char * args[])
 		mi_coleccion.AgregaObjeto(&p_izda);
 
 		LogicaJuego logicaJuego = LogicaJuego();
-		Render motorRender = Render(mi_coleccion, screen);
-		MotorFisica motorFisica = MotorFisica(mi_coleccion);
+		Render motorRender = Render(&mi_coleccion, screen);
+		MotorFisica motorFisica = MotorFisica(&mi_coleccion);
 
 		//Inicialización del marcador
 
@@ -124,13 +124,17 @@ int main(int arcg, char * args[])
 		string fuente = "Equalize.ttf";
 		string fuente_menu = "Flying Bird.ttf";
 		float tam_fuente_titulo = 70;
+		float tam_fuente_titulo2 = 18;
 		float tam_fuente_menu = 50;
 		float tam_fuente_marcador = 50;
 		SDL_Color negro = { 0, 0, 0, 0 };
 		SDL_Color azul = { 96, 111, 140, 0 };
 
-
-
+		Menu menu_titulo(fuente, tam_fuente_titulo, window);
+		Menu menu_titulo2(fuente, tam_fuente_titulo2, window);
+		Menu menu_modos(fuente_menu, tam_fuente_menu, window);
+		Menu menu_marcador(fuente, tam_fuente_marcador, window);
+	
 
 		InterfazUsuario miIU;
 
@@ -140,7 +144,7 @@ int main(int arcg, char * args[])
 		bool recien_entrado = true;
 		SDL_Event e;
 
-		int estado = Menu;
+		int estado = MenuInicio;
 		int modo = ModoUnJugador;
 
 
@@ -159,16 +163,23 @@ int main(int arcg, char * args[])
 			switch (estado)
 			{
 
-			case Menu: 
+			case MenuInicio:
 			{
-				motorRender.Escribe(window, "PONG", negro, fuente, 70, 300, 400);
-				motorRender.Escribe(window, "Pulsa ENTER para continuar", negro, fuente, 18, 225, 650);
+				if (recien_entrado)
+				{
+					recien_entrado = false;
+					motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
+					motorRender.Escribe(menu_titulo2, window, "Pulsa ENTER para continuar", negro, 225, 650);
+					SDL_UpdateWindowSurface(window);
+				}
+
 				if (miIU.DetectaPulsacion() == ENTER)
 				{
 					estado = ModosJuego;
+					recien_entrado = true;
 					SDL_Delay(150);
 				}
-			
+
 			}break;
 
 			case ModosJuego:
@@ -182,15 +193,17 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
-						motorRender.Escribe(window, "Un jugador", azul, fuente_menu, tam_fuente_menu, 225, 650);
-						motorRender.Escribe(window, "Dos jugadores", negro, fuente_menu, tam_fuente_menu, 225, 750);
-						motorRender.Escribe(window, "Modo caos (Dos jugadores)", negro, fuente_menu, tam_fuente_menu, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
+						motorRender.Escribe(menu_modos, window, "Un jugador", azul, 225, 650);
+						motorRender.Escribe(menu_modos, window, "Dos jugadores", negro, 225, 750);
+						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", negro, 225, 850);
+						SDL_UpdateWindowSurface(window);
 					}
 
 					if (miIU.DetectaPulsacion() == ENTER)
 					{
-						estado = JuegoUnJugador;
+						modo = JuegoUnJugador;
+						estado = Jugando;
 						recien_entrado = true;
 						SDL_Delay(150);
 					}
@@ -215,15 +228,17 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
-						motorRender.Escribe(window, "Un jugador", negro, fuente_menu, tam_fuente_menu, 225, 650);
-						motorRender.Escribe(window, "Dos jugadores", azul, fuente_menu, tam_fuente_menu, 225, 750);
-						motorRender.Escribe(window, "Modo caos (Dos jugadores)", negro, fuente_menu, tam_fuente_menu, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
+						motorRender.Escribe(menu_modos, window, "Un jugador", negro, 225, 650);
+						motorRender.Escribe(menu_modos, window, "Dos jugadores", azul, 225, 750);
+						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", negro, 225, 850);
+						SDL_UpdateWindowSurface(window);
 					}
 
 					if (miIU.DetectaPulsacion() == ENTER)
 					{
-						estado = JuegoDosJugadores;
+						modo = JuegoDosJugadores;
+						estado = Jugando;
 						SDL_Delay(150);
 						recien_entrado = true;
 					}
@@ -248,15 +263,17 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(window, "PONG", negro, fuente, tam_fuente_titulo, 300, 400);
-						motorRender.Escribe(window, "Un jugador", negro, fuente_menu, tam_fuente_menu, 225, 650);
-						motorRender.Escribe(window, "Dos jugadores", negro, fuente_menu, tam_fuente_menu, 225, 750);
-						motorRender.Escribe(window, "Modo caos (Dos jugadores)", azul, fuente_menu, tam_fuente_menu, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
+						motorRender.Escribe(menu_modos, window, "Un jugador", negro, 225, 650);
+						motorRender.Escribe(menu_modos, window, "Dos jugadores", negro, 225, 750);
+						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", azul, 225, 850);
+						SDL_UpdateWindowSurface(window);
 					}
 
 					if (miIU.DetectaPulsacion() == ENTER)
 					{
-						estado = JuegoCaos;
+						modo = JuegoCaos;
+						estado = Jugando;
 						SDL_Delay(150);
 						recien_entrado = true;
 					}
@@ -279,44 +296,74 @@ int main(int arcg, char * args[])
 
 			}break;
 
+			case Jugando:
+			{	
+				switch (modo)
+			{
+
 			case JuegoUnJugador:
 			{
-				motorRender.BorraPantalla();
-				miIA.EligeMovimiento(mi_pelota);
-				motorFisica.Actualiza(miIU.DetectaPulsacion());
+				if (recien_entrado)
+				{
+					mi_raqueta_dcha.setIAon();
+					recien_entrado = false;
+				}
 
-				motorRender.DibujaTodo();
-				
-				logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
-
-
-				golesA = mi_marcador.getGolesA();
-				golesB = mi_marcador.getGolesB();
-
-				s_golesA = to_string(golesA);
-				s_golesB = to_string(golesB);
-
-				motorRender.Escribe(window, s_golesA, negro, fuente, tam_fuente_marcador, 300, 400);
-				motorRender.Escribe(window, s_golesB, negro, fuente, tam_fuente_marcador, 600, 400);
-
-
-
-				
-
-				/*
-				Campo mi_campo = Campo(black, ancho_campo, alto_campo);
-				mi_coleccion.AgregaObjeto(&mi_campo);
-				*/
-
-			
-				SDL_UpdateWindowSurface(window);
 
 			} break;
 
 			case JuegoDosJugadores:
-				break;
+			{
+
+			}
+			break;
+			case JuegoCaos:
+			{
+				if (recien_entrado)
+				{
+					recien_entrado = false;
+
+					mi_pelota = new Pelota(black, 55, 25, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+					mi_coleccion.AgregaObjeto(mi_pelota);
+					for (int i = 1; i < 0; i++)
+					{
+						mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+						mi_coleccion.AgregaObjeto(mi_pelota);
+					}
+				}
+
+			}
+			break;
 			}
 
+
+			motorRender.BorraPantalla();
+			miIA.EligeMovimiento(mi_pelota);
+			motorFisica.Actualiza(miIU.DetectaPulsacion());
+
+			motorRender.DibujaTodo();
+
+			logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+
+
+			golesA = mi_marcador.getGolesA();
+			golesB = mi_marcador.getGolesB();
+
+			s_golesA = to_string(golesA);
+			s_golesB = to_string(golesB);
+
+			motorRender.Escribe(menu_marcador, window, s_golesA, negro, 300, 400);
+			motorRender.Escribe(menu_marcador, window, s_golesB, negro, 600, 400);
+
+			/*
+			Campo mi_campo = Campo(black, ancho_campo, alto_campo);
+			mi_coleccion.AgregaObjeto(&mi_campo);
+			*/
+
+
+			SDL_UpdateWindowSurface(window);
+			} 
+			}
 				
 
 

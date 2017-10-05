@@ -20,14 +20,14 @@ class MotorFisica
 {
 
 protected:
-	ColeccionObjetos coleccion;
+	ColeccionObjetos *coleccion;
 	int num_objetos;
 public:
-	MotorFisica(ColeccionObjetos objetos);
+	MotorFisica(ColeccionObjetos *objetos);
 	//~MotorFisica();
 
 	void Actualiza(int tecla);
-	void Mueve(ObjetoJuego &obj);
+	void Mueve(ObjetoJuego *obj);
 
 	//Devuelve la parte del objeto 1 que rebotó
 	int DetectaColision(ObjetoJuego obj1, ObjetoJuego obj2);

@@ -2,14 +2,11 @@
 
 
 
-Raqueta::Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz, bool IA)
+Raqueta::Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz)
 	:ObjetoJuego(color, px, py, 0, vy, 0, ay, w, h, roz) 
 {
-	ControladoPorIA = IA;
-	if (ControladoPorIA)
-		AfectadoPorPulsacion = false;
-	else
-		AfectadoPorPulsacion = true;
+	ControladoPorIA = false;
+	AfectadoPorPulsacion = true;
 
 	V_max = 7.0;
 
@@ -20,6 +17,17 @@ Raqueta::~Raqueta()
 {
 }
 
+void Raqueta::setIAoff()
+{
+	ControladoPorIA = false;
+	AfectadoPorPulsacion = true;
+}
+
+void Raqueta::setIAon()
+{
+	ControladoPorIA = true;
+	AfectadoPorPulsacion = false;
+}
 
 void Raqueta::setVelocidadX(float vx)
 {
