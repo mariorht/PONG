@@ -24,10 +24,13 @@ void ColeccionObjetos::EliminaObjeto(ObjetoJuego *objeto)
 	for (int i = 0; i < tam_coleccion; i++) {
 		obj = objetos[i];
 		if (obj == objeto)
-			objetos.erase(objetos.begin()+i);
+		{
+			objetos.erase(objetos.begin() + i);
+			tam_coleccion--;
+		}
 
 	}
-	tam_coleccion = objetos.size();
+
 }
 
 ColeccionObjetos::ColeccionObjetos() 

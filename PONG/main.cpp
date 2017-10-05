@@ -87,16 +87,18 @@ int main(int arcg, char * args[])
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
 
-
 		
 
+
 		//Crear resto de basura
-		Raqueta mi_raqueta_izq(black, 50.0, 00.0, 0, 0, 20, 150.0, .1);
+		Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 150.0, .1);
 		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .1);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 
 		InteligenciaArtificial miIA(&mi_raqueta_dcha);
+
+		
 		
 		
 		
@@ -147,7 +149,7 @@ int main(int arcg, char * args[])
 		int estado = MenuInicio;
 		int modo = ModoUnJugador;
 
-
+		int cont = 0;
 
 		while (!cerrar)
 		{
@@ -308,6 +310,8 @@ int main(int arcg, char * args[])
 					mi_raqueta_dcha.setIAon();
 					recien_entrado = false;
 				}
+				
+
 
 
 			} break;
@@ -325,11 +329,14 @@ int main(int arcg, char * args[])
 
 					mi_pelota = new Pelota(black, 55, 25, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
 					mi_coleccion.AgregaObjeto(mi_pelota);
-					for (int i = 1; i < 0; i++)
-					{
-						mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
-						mi_coleccion.AgregaObjeto(mi_pelota);
-					}
+					//for (int i = 1; i < 4; i++)
+					//{
+						//mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+						//mi_coleccion.AgregaObjeto(new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0));
+					//}
+
+					Pared *pared= new Pared(black, 200,500 , 200, 20);
+					mi_coleccion.AgregaObjeto(pared);
 				}
 
 			}
@@ -339,8 +346,11 @@ int main(int arcg, char * args[])
 
 			motorRender.BorraPantalla();
 			miIA.EligeMovimiento(mi_pelota);
-			motorFisica.Actualiza(miIU.DetectaPulsacion());
+			
 
+
+			motorFisica.Actualiza(miIU.DetectaPulsacion());
+			
 			motorRender.DibujaTodo();
 
 			logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
@@ -365,6 +375,7 @@ int main(int arcg, char * args[])
 			} 
 			}
 				
+
 
 
 
