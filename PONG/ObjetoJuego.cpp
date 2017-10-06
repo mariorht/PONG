@@ -1,7 +1,8 @@
 #include "ObjetoJuego.h"
+#include "Campo.h"
 
 
-ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float ax, float ay, float w, float h, float roz)
+ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float ax, float ay, float w, float h, float roz, Campo *mi_campo_)
 {
 	color = c;
 	posX=px;
@@ -17,6 +18,9 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	AfectadoPorPulsacion = false;
 	AfectadoPorChoque = false;
 	Forma = "rectangulo";
+	campo = mi_campo_;
+	EsAtravesado = false;
+
 }
 
 
@@ -28,8 +32,9 @@ Uint32 ObjetoJuego::getColor()
 
 void ObjetoJuego::setPosicionX(float px)
 {
-	if (px > 1000-ancho) 
-		posX = 1000 - ancho;
+	float ancho_campo = campo->getAnchoCampo();
+	if (px > ancho_campo-ancho) 
+		posX = ancho_campo - ancho;
 	else if (px < 0)
 		posX = 0;
 	else posX = px;
@@ -38,9 +43,9 @@ void ObjetoJuego::setPosicionX(float px)
 
 void ObjetoJuego::setPosicionY(float py)
 {
-	
-	if (py > 1000 - alto)
-		posY = 1000 - alto;
+	float alto_campo = campo->getAltoCampo();
+	if (py > alto_campo - alto)
+		posY = alto_campo - alto;
 	else if (py < 0)
 		posY = 0;
 	else posY = py;

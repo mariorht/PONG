@@ -34,10 +34,13 @@ void MotorFisica::Actualiza(int tecla)
 	vector<ObjetoJuego*> mis_objetos = coleccion->getColeccionObjetos();
 	num_objetos = coleccion->getTamColeccion();
 
+	//Detectar colisiones
 	for (int i = 0; i < num_objetos; i++)
 	{
+		if (mis_objetos[i]->EsAtravesado) continue;
 		for (int j = i + 1; j < num_objetos; j++)
 		{
+			if (mis_objetos[j]->EsAtravesado) continue;
 			int colision = DetectaColision(*mis_objetos[i], *mis_objetos[j]);
 
 			if (mis_objetos[i]->Forma == "rectangulo" ||

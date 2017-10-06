@@ -32,6 +32,8 @@ int InterfazUsuario::DetectaPulsacion()
 		return TECLA_A;
 	if (GetAsyncKeyState(0x44))
 		return TECLA_D;
+	
+
 
 
 

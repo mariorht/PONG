@@ -18,6 +18,7 @@ void ColeccionObjetos::AgregaObjeto(ObjetoJuego * objeto)
 	tam_coleccion = objetos.size();
 }
 
+
 void ColeccionObjetos::EliminaObjeto(ObjetoJuego *objeto)
 {
 	ObjetoJuego* obj;
@@ -42,6 +43,8 @@ void ColeccionObjetos::EliminaUltimoObjeto()
 ColeccionObjetos::ColeccionObjetos() 
 {
 }
+
+
 
 
 ColeccionObjetos::~ColeccionObjetos()

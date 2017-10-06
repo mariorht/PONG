@@ -8,12 +8,10 @@
 #include "LogicaJuego.h"
 #include "Pared.h"
 #include "InteligenciaArtificial.h"
+#include "Campo.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-
-
-
 
 
 #define MenuInicio 1
@@ -35,11 +33,10 @@
 int main(int arcg, char * args[])
 {
 	srand (GetTickCount());
-
 	SDL_Window* window = NULL;
 	SDL_Surface* screen = NULL;
 
-	//Initialize SDL
+	//Inicilizar SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		cout << "SDL could not initialize! SDL_Error:" << SDL_GetError() << endl;
@@ -70,48 +67,60 @@ int main(int arcg, char * args[])
 		screen = SDL_GetWindowSurface(window);
 		
 		//Fill the surface white
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 
 		//Update the surface
 		SDL_UpdateWindowSurface(window);
 			
-	
+		// Campo
+		Campo *mi_campo = new Campo(1920, 1080);
+		float ancho_campo = mi_campo->getAnchoCampo();
+		float alto_campo = mi_campo->getAltoCampo();
+
 		//Vector de objetos
 		ColeccionObjetos mi_coleccion = ColeccionObjetos();
 
-		Uint32 black = SDL_MapRGB(screen->format, 0, 0, 0);
-			
-		Pelota *mi_pelota;
+		Uint32 white = SDL_MapRGB(screen->format, 242, 254, 255);
+		
 		// Crear pelotas
+		Pelota *mi_pelota;
 		for (int i = 1; i <2; i++)
 		{
-			mi_pelota = new Pelota(black, 55*i, 25*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+			mi_pelota = new Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0, mi_campo);
 			mi_coleccion.AgregaObjeto(mi_pelota);
 		}
 
+
 		
 
+		//Crear resto de elementos
 
-		//Crear resto de basura
-		Raqueta mi_raqueta_izq(black, 50.0, 100.0, 0, 0, 20, 150.0, .1);
-		Raqueta mi_raqueta_dcha(black, 950.0, 500.0, 0, 0, 20, 200.0, .1);
+		float ancho_raqueta = ancho_campo * 0.01;
+		float alto_raqueta = alto_campo * 0.15;
+		Raqueta mi_raqueta_izq(white, mi_campo->getPosPorteriaIzq(), ancho_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, mi_campo);
+		Raqueta mi_raqueta_dcha(white, mi_campo->getPosPorteriaDcha()-ancho_raqueta, ancho_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, mi_campo);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 		mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 
 		InteligenciaArtificial miIA(&mi_raqueta_dcha);
 
 		
-		
-		
-		
-		Pared p_dcha(black, 1000 - 20, 100, 20, 1000);
-		Pared p_izda(black, 0, 100, 20, 1000);
-		Pared p_arriba(black, 0, 0, 1000, 20);
-		Pared p_abajo(black, 0, 1000 - 20, 1000, 20);
+		Pared p_arriba(white, 0, 0.02*alto_campo, ancho_campo, 0.02*alto_campo, mi_campo, false);
+		Pared p_abajo(white, 0, 0.96*alto_campo, ancho_campo, 0.02*alto_campo, mi_campo, false);
+
 		mi_coleccion.AgregaObjeto(&p_abajo);
 		mi_coleccion.AgregaObjeto(&p_arriba);
-		mi_coleccion.AgregaObjeto(&p_dcha);
-		mi_coleccion.AgregaObjeto(&p_izda);
+		
+		Pared decoracion(white, 0.5*ancho_campo, 0.1*alto_campo, 0.02*alto_campo, 0.15*alto_campo, mi_campo, true);
+		Pared decoracion2(white, 0.5*ancho_campo, 0.30*alto_campo, 0.02*alto_campo, 0.15*alto_campo, mi_campo, true);
+		Pared decoracion3(white, 0.5*ancho_campo, 0.50*alto_campo, 0.02*alto_campo, 0.15*alto_campo, mi_campo, true);
+		Pared decoracion4(white, 0.5*ancho_campo, 0.70*alto_campo, 0.02*alto_campo, 0.15*alto_campo, mi_campo, true);
+		
+		mi_coleccion.AgregaObjeto(&decoracion);
+		mi_coleccion.AgregaObjeto(&decoracion2);
+		mi_coleccion.AgregaObjeto(&decoracion3);
+		mi_coleccion.AgregaObjeto(&decoracion4);
+
 
 		LogicaJuego logicaJuego = LogicaJuego();
 		Render motorRender = Render(&mi_coleccion, screen);
@@ -119,20 +128,19 @@ int main(int arcg, char * args[])
 
 		//Inicialización del marcador
 
-		Marcador mi_marcador = Marcador(black, 0, 0, 30, 20, 0, 0);
-		mi_coleccion.AgregaObjeto(&mi_marcador);
+		Marcador mi_marcador = Marcador(0, 0);
 		int golesA = 0, golesB = 0;
 		string s_golesA, s_golesB;
 
 		//Inicialización parámetros escritura
 		string fuente = "Equalize.ttf";
-		string fuente_menu = "Flying Bird.ttf";
-		float tam_fuente_titulo = 70;
-		float tam_fuente_titulo2 = 18;
-		float tam_fuente_menu = 50;
-		float tam_fuente_marcador = 50;
-		SDL_Color negro = { 0, 0, 0, 0 };
-		SDL_Color azul = { 96, 111, 140, 0 };
+		string fuente_menu = "AldoTheApache.ttf";
+		float tam_fuente_titulo = alto_campo*0.07;
+		float tam_fuente_titulo2 = alto_campo*0.02;
+		float tam_fuente_menu = alto_campo*0.03;
+		float tam_fuente_marcador = alto_campo*0.035;
+		SDL_Color blanco = { 255, 255, 255, 0 };
+		SDL_Color azul = { 92, 156, 188, 0 };
 
 		Menu menu_titulo(fuente, tam_fuente_titulo, window);
 		Menu menu_titulo2(fuente, tam_fuente_titulo2, window);
@@ -150,15 +158,15 @@ int main(int arcg, char * args[])
 
 		int estado = MenuInicio;
 		int modo = ModoUnJugador;
-
 		int cont = 0;
+
 
 		while (!cerrar)
 		{
 
 			while (SDL_PollEvent(&e))
 			{
-				if (e.type == SDL_QUIT)
+				if (e.type == SDL_QUIT || e.key.keysym.sym== SDLK_ESCAPE)
 					cerrar = true;
 			}
 
@@ -172,8 +180,8 @@ int main(int arcg, char * args[])
 				if (recien_entrado)
 				{
 					recien_entrado = false;
-					motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
-					motorRender.Escribe(menu_titulo2, window, "Pulsa ENTER para continuar", negro, 225, 650);
+					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
+					motorRender.Escribe(menu_titulo2, window, "Pulsa ENTER para continuar", blanco, 0.20*ancho_campo, 0.6*alto_campo, mi_campo);
 					SDL_UpdateWindowSurface(window);
 				}
 
@@ -197,10 +205,10 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
-						motorRender.Escribe(menu_modos, window, "Un jugador", azul, 225, 650);
-						motorRender.Escribe(menu_modos, window, "Dos jugadores", negro, 225, 750);
-						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", negro, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "UN JUGADOR", azul, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
 						SDL_UpdateWindowSurface(window);
 					}
 
@@ -232,10 +240,10 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
-						motorRender.Escribe(menu_modos, window, "Un jugador", negro, 225, 650);
-						motorRender.Escribe(menu_modos, window, "Dos jugadores", azul, 225, 750);
-						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", negro, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "DOS JUGADORES", azul, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
 						SDL_UpdateWindowSurface(window);
 					}
 
@@ -267,10 +275,10 @@ int main(int arcg, char * args[])
 					{
 						recien_entrado = false;
 						motorRender.BorraPantalla();
-						motorRender.Escribe(menu_titulo, window, "PONG", negro, 300, 400);
-						motorRender.Escribe(menu_modos, window, "Un jugador", negro, 225, 650);
-						motorRender.Escribe(menu_modos, window, "Dos jugadores", negro, 225, 750);
-						motorRender.Escribe(menu_modos, window, "Modo caos (Dos jugadores)", azul, 225, 850);
+						motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
+						motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", azul, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
 						SDL_UpdateWindowSurface(window);
 					}
 
@@ -309,12 +317,9 @@ int main(int arcg, char * args[])
 			{
 				if (recien_entrado)
 				{
-					
 					mi_raqueta_dcha.setIAon();
 					recien_entrado = false;
 				}
-				
-
 
 
 			} break;
@@ -330,56 +335,60 @@ int main(int arcg, char * args[])
 				{
 					recien_entrado = false;
 
-					//mi_pelota = new Pelota(black, 555, 25, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
-					//mi_coleccion.AgregaObjeto(mi_pelota);
-					for (int i = 0; i < 1; i++)
+					mi_pelota = new Pelota(white, 55, 25, 6.5, 7, 0, 0, 12/**De momento este es el tamaño del punto*/, 0, mi_campo);
+					mi_coleccion.AgregaObjeto(mi_pelota);
+					for (int i = 1; i < 0; i++)
 					{
-						mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+						mi_pelota = new Pelota(white, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0, mi_campo);
 						mi_coleccion.AgregaObjeto(mi_pelota);
 					}
-
-
-				}
-				cont++;
-
-
-				if (cont == 1000 )
-				{
-					mi_pelota = new Pelota(black,
-										400 + rand() % (600 - 400),
-										100 + rand() % (900 - 100),
-										6.5,
-										7,
-										0,
-										0,
-										20/**De momento este es el tamaño del punto*/, 
-										0);
-					mi_coleccion.AgregaObjeto(mi_pelota);
-
-					Pared *pared = new Pared(black,
-						400 + rand() % (700 - 300),
-						100 + rand() % (900 - 100),
-						20 + rand() % (150 - 20),
-						20 + rand() % (150 - 20));
-					mi_coleccion.AgregaObjeto(pared);
-
-
 				}
 
-				if (cont == 2000)
-				{
+
+					cont++;
+
+
+					if (cont == 1000)
+					{
+						mi_pelota = new Pelota(white,
+							400 + rand() % (600 - 400),
+							100 + rand() % (900 - 100),
+							6.5,
+							7,
+							0,
+							0,
+							12/**De momento este es el tamaño del punto*/,
+							0,
+							mi_campo);
+						mi_coleccion.AgregaObjeto(mi_pelota);
+
+						Pared *pared = new Pared(white,
+							400 + rand() % (700 - 300),
+							100 + rand() % (900 - 100),
+							20 + rand() % (150 - 20),
+							20 + rand() % (150 - 20),
+							mi_campo,
+							false);
+						mi_coleccion.AgregaObjeto(pared);
+
+
+					}
+
+					if (cont == 2000)
+					{
+
+						mi_coleccion.EliminaUltimoObjeto();
+						Pared *pared = new Pared(white,
+							400 + rand() % (700 - 300),
+							100 + rand() % (900 - 100),
+							20 + rand() % (150 - 20),
+							20 + rand() % (150 - 20),
+							mi_campo,
+							false);
+						mi_coleccion.AgregaObjeto(pared);
+						cont = 0;
+					}
 				
-					mi_coleccion.EliminaUltimoObjeto();
-					Pared *pared= new Pared(black,	
-											400 + rand() % (700 - 300),
-											100 + rand() % (900 - 100), 
-											20 + rand() % (150 - 20),
-											20 + rand() % (150 - 20));
-											mi_coleccion.AgregaObjeto(pared);
-					cont = 0;
-				}
-
-
 
 			}
 			break;
@@ -388,14 +397,11 @@ int main(int arcg, char * args[])
 
 			motorRender.BorraPantalla();
 			miIA.EligeMovimiento(mi_pelota);
-			
-
-
 			motorFisica.Actualiza(miIU.DetectaPulsacion());
-			
-			motorRender.DibujaTodo();
 
-			logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion);
+			motorRender.DibujaTodo(mi_campo);
+
+			logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion, mi_campo);
 
 
 			golesA = mi_marcador.getGolesA();
@@ -404,20 +410,16 @@ int main(int arcg, char * args[])
 			s_golesA = to_string(golesA);
 			s_golesB = to_string(golesB);
 
-			motorRender.Escribe(menu_marcador, window, s_golesA, negro, 300, 400);
-			motorRender.Escribe(menu_marcador, window, s_golesB, negro, 600, 400);
+			motorRender.Escribe(menu_marcador, window, s_golesA, blanco, 0.35*ancho_campo, 0.1*alto_campo, mi_campo);
+			motorRender.Escribe(menu_marcador, window, s_golesB, blanco, 0.55*ancho_campo, 0.1*alto_campo, mi_campo);
 
-			/*
-			Campo mi_campo = Campo(black, ancho_campo, alto_campo);
-			mi_coleccion.AgregaObjeto(&mi_campo);
-			*/
+			
 
 
 			SDL_UpdateWindowSurface(window);
 			} 
 			}
 				
-
 
 
 

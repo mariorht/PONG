@@ -9,7 +9,7 @@ class Pared :
 {
 protected:
 public:
-	Pared(Uint32 color, float px, float py, float w, float h);
+	Pared(Uint32 color, float px, float py, float w, float h, Campo *mi_campo, bool atravesado);
 	~Pared();
 
 };

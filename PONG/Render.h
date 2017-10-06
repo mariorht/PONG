@@ -8,9 +8,10 @@
 #include <SDL_ttf.h>
 #include "ColeccionObjetos.h"
 #include "Menu.h"
+#include "Campo.h"
 
-#define SCREEN_WIDTH  600
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH  1280
+#define SCREEN_HEIGHT 700
 
 
 class Render
@@ -29,11 +30,12 @@ public:
 	//~Render();
 
 	void DibujaRectangulo();
-	void DibujaTodo();
+	void DibujaTodo(Campo *campo);
 
 	void BorraPantalla();
 
-	void Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y);
+
+	void Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y, Campo *campo);
 
 
 };

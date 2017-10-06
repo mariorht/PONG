@@ -7,9 +7,9 @@
 #include <iostream>
 #include <string>
 #include <SDL.h>
+#include "Campo.h"
 
-#define SCREEN_WIDTH  500
-#define SCREEN_HEIGHT  500
+
 
 using namespace std;
 
@@ -26,9 +26,11 @@ protected:
 	float ancho, alto;
 
 	bool PuedoMeterGol;
+	Campo *campo;
 
 public:
 	string Forma;
+	bool EsAtravesado;
 	bool AfectadoPorChoque; //provisional aquí
 
 
@@ -38,11 +40,11 @@ public:
 		float vx, float vy,
 		float ax, float ay,
 		float w, float h,
-		float roz);
+		float roz, Campo *campo);
 	//~ObjetoJuego();
 
 	void setPosicionX(float);
-	void setPosicionY(float);
+	virtual void setPosicionY(float);
 	virtual void setVelocidadX(float);
 	virtual void setVelocidadY(float);
 	void setAceleracionX(float);

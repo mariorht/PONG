@@ -11,6 +11,7 @@
 #define TECLA_S 7
 #define TECLA_A 8
 #define TECLA_D 9
+#define ESC 10
 
 class InterfazUsuario
 {

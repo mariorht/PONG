@@ -2,8 +2,8 @@
 
 
 
-Raqueta::Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz)
-	:ObjetoJuego(color, px, py, 0, vy, 0, ay, w, h, roz) 
+Raqueta::Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz, Campo *mi_campo)
+	:ObjetoJuego(color, px, py, 0, vy, 0, ay, w, h, roz, mi_campo) 
 {
 	ControladoPorIA = false;
 	AfectadoPorPulsacion = true;
@@ -47,4 +47,15 @@ void Raqueta::setVelocidadY(float vy)
 		velY = V_max;
 	if (velY < -V_max)
 		velY = -V_max;
+}
+
+void Raqueta::setPosicionY(float py)
+{
+	float alto_campo = campo->getAltoCampo();
+	if (py > alto_campo - 2*ancho - alto)
+		posY = alto_campo - 2*ancho - alto;
+	else if (py < 2*ancho)
+		posY = 2*ancho;
+	else posY = py;
+
 }

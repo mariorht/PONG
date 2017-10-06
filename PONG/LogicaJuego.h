@@ -4,6 +4,7 @@
 
 #include "Marcador.h"
 #include "ColeccionObjetos.h"
+#include "Campo.h"
 
 class LogicaJuego
 {
@@ -11,7 +12,7 @@ public:
 	LogicaJuego();
 	~LogicaJuego();
 
-	void ControlaMarcador(Marcador *mi_marcador, ColeccionObjetos coleccion);
+	void ControlaMarcador(Marcador *mi_marcador, ColeccionObjetos coleccion, Campo *campo);
 };
 
 #endif

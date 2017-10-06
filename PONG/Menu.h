@@ -8,10 +8,13 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+#define SCREEN_WIDTH  1280
+#define SCREEN_HEIGHT 700
+
+
 using namespace std;
 
-#define SCREEN_WIDTH  500
-#define SCREEN_HEIGHT  500
+
 
 class Menu
 {

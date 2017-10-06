@@ -12,7 +12,7 @@ protected:
 
 public:
 	
-	Pelota(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float r, float roz);
+	Pelota(Uint32 color, float px, float py, float vx, float vy, float ax, float ay, float r, float roz, Campo *mi_campo);
 	//~Pelota();
 };
 

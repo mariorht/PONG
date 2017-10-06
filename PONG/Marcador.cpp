@@ -3,9 +3,8 @@
 
 
 
-Marcador::Marcador(Uint32 color, float px, float py, float w, float h, int goles_A, int goles_B)
-	:ObjetoJuego(color, px, py, 0, 0, 0, 0, w, h, 0) {
-	PuedoMeterGol = 0;
+Marcador::Marcador(int goles_A, int goles_B) 
+{
 }
 
 

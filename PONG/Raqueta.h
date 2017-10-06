@@ -11,9 +11,10 @@ public:
 	float V_max;
 
 
-	Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz);
+	Raqueta(Uint32 color, float px, float py, float vy, float ay, float w, float h, float roz, Campo *mi_campo);
 	~Raqueta();
 
+	void setPosicionY(float);
 	void setVelocidadX(float);
 	void setVelocidadY(float);
 	void setIAoff();

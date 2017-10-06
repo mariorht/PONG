@@ -13,7 +13,7 @@ LogicaJuego::~LogicaJuego()
 {
 }
 
-void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos coleccion)
+void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos coleccion, Campo *campo)
 {
 	int puntuacion_A, puntuacion_B;
 	puntuacion_A = mi_marcador->getGolesA();
@@ -26,7 +26,7 @@ void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 		if (mis_objetos[i]->getPuedoMeterGol()) 
 		{
-			if ((mis_objetos[i]->getPosicionX()) > 940) //MIRAR TAMAÑO
+			if ((mis_objetos[i]->getPosicionX()) > campo->getPosPorteriaDcha() ) //MIRAR TAMAÑO
 			{
 				mi_marcador->AumentaGolA();
 				cout << "Gol del equipo A" << endl;
@@ -39,7 +39,7 @@ void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 			}
 
-			else if ((mis_objetos[i]->getPosicionX()) < 20)//MIRAR TAMAÑO
+			else if ((mis_objetos[i]->getPosicionX()) < campo->getPosPorteriaIzq())//MIRAR TAMAÑO
 			{
 				mi_marcador->AumentaGolB();
 				cout << "Gol del equipo B" << endl;

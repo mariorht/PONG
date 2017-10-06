@@ -10,17 +10,20 @@ Render::Render(ColeccionObjetos *objetos, SDL_Surface *d)
 
 }
 
-void Render::DibujaTodo()
+void Render::DibujaTodo(Campo *campo)
 {
+	float ancho_campo = campo->getAnchoCampo();
+	float alto_campo = campo->getAltoCampo();
+
 	vector<ObjetoJuego*> mis_objetos = coleccion->getColeccionObjetos();
 	num_objetos = coleccion->getTamColeccion();
 	for (int i = 0; i < num_objetos; i++)
 	{
-		int posicionX = mis_objetos[i]->getPosicionX() / 1000.0 *SCREEN_WIDTH;
-		int posicionY = mis_objetos[i]->getPosicionY() / 1000.0 * SCREEN_HEIGHT;
+		int posicionX = mis_objetos[i]->getPosicionX() / ancho_campo *SCREEN_WIDTH;
+		int posicionY = mis_objetos[i]->getPosicionY() / alto_campo * SCREEN_HEIGHT;
 
-		float w = mis_objetos[i]->getAncho() / 1000.0 *SCREEN_WIDTH;
-		float h = mis_objetos[i]->getAlto() / 1000.0 *SCREEN_HEIGHT;
+		float w = mis_objetos[i]->getAncho() / ancho_campo *SCREEN_WIDTH;
+		float h = mis_objetos[i]->getAlto() / alto_campo *SCREEN_HEIGHT;
 
 		//Quizá meterlo en DibujaRectangulo
 		if (mis_objetos[i]->Forma == "rectangulo")
@@ -30,7 +33,7 @@ void Render::DibujaTodo()
 		}
 		else if (mis_objetos[i]->Forma == "circulo")
 		{
-			image = SDL_LoadBMP("dot.bmp");
+			image = SDL_LoadBMP("dot_black.bmp");
 		}
 
 		rect = image->clip_rect;
@@ -56,16 +59,18 @@ void Render::DibujaRectangulo()
 
 void Render::BorraPantalla()
 {
-	SDL_FillRect(destination, NULL, SDL_MapRGB(destination->format, 0xFF, 0xFF, 0xFF));
+	SDL_FillRect(destination, NULL, SDL_MapRGB(destination->format, 5, 5, 5));
+
 }
 
-void Render::Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y)
+
+void Render::Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y, Campo *campo)
 {
 	SDL_Surface *texto = TTF_RenderText_Solid(menu.GetFuente(), texto_escribir.c_str(), color);
 
 	SDL_Rect CuadroTexto;
-	CuadroTexto.x = pos_x / 1000.0 * SCREEN_WIDTH;
-	CuadroTexto.y = pos_y / 1000.0 * SCREEN_HEIGHT;
+	CuadroTexto.x = pos_x / campo->getAnchoCampo() * SCREEN_WIDTH;
+	CuadroTexto.y = pos_y / campo->getAltoCampo() * SCREEN_HEIGHT;
 
 	SDL_BlitSurface(texto, NULL, destination, &CuadroTexto);
 
