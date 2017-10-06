@@ -34,6 +34,8 @@
 
 int main(int arcg, char * args[])
 {
+	srand (GetTickCount());
+
 	SDL_Window* window = NULL;
 	SDL_Surface* screen = NULL;
 
@@ -307,6 +309,7 @@ int main(int arcg, char * args[])
 			{
 				if (recien_entrado)
 				{
+					
 					mi_raqueta_dcha.setIAon();
 					recien_entrado = false;
 				}
@@ -327,17 +330,56 @@ int main(int arcg, char * args[])
 				{
 					recien_entrado = false;
 
-					mi_pelota = new Pelota(black, 55, 25, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
-					mi_coleccion.AgregaObjeto(mi_pelota);
-					//for (int i = 1; i < 4; i++)
-					//{
-						//mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
-						//mi_coleccion.AgregaObjeto(new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0));
-					//}
+					//mi_pelota = new Pelota(black, 555, 25, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+					//mi_coleccion.AgregaObjeto(mi_pelota);
+					for (int i = 0; i < 1; i++)
+					{
+						mi_pelota = new Pelota(black, 55 * i, 25 * i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0);
+						mi_coleccion.AgregaObjeto(mi_pelota);
+					}
 
-					Pared *pared= new Pared(black, 200,500 , 200, 20);
-					mi_coleccion.AgregaObjeto(pared);
+
 				}
+				cont++;
+
+
+				if (cont == 1000 )
+				{
+					mi_pelota = new Pelota(black,
+										400 + rand() % (600 - 400),
+										100 + rand() % (900 - 100),
+										6.5,
+										7,
+										0,
+										0,
+										20/**De momento este es el tamaño del punto*/, 
+										0);
+					mi_coleccion.AgregaObjeto(mi_pelota);
+
+					Pared *pared = new Pared(black,
+						400 + rand() % (700 - 300),
+						100 + rand() % (900 - 100),
+						20 + rand() % (150 - 20),
+						20 + rand() % (150 - 20));
+					mi_coleccion.AgregaObjeto(pared);
+
+
+				}
+
+				if (cont == 2000)
+				{
+				
+					mi_coleccion.EliminaUltimoObjeto();
+					Pared *pared= new Pared(black,	
+											400 + rand() % (700 - 300),
+											100 + rand() % (900 - 100), 
+											20 + rand() % (150 - 20),
+											20 + rand() % (150 - 20));
+											mi_coleccion.AgregaObjeto(pared);
+					cont = 0;
+				}
+
+
 
 			}
 			break;

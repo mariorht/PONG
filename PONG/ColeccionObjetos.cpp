@@ -33,11 +33,15 @@ void ColeccionObjetos::EliminaObjeto(ObjetoJuego *objeto)
 
 }
 
+void ColeccionObjetos::EliminaUltimoObjeto()
+{
+	objetos.pop_back();
+	tam_coleccion--;
+}
+
 ColeccionObjetos::ColeccionObjetos() 
 {
 }
-
-
 
 
 ColeccionObjetos::~ColeccionObjetos()

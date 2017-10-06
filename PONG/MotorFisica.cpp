@@ -116,17 +116,18 @@ void MotorFisica::Actualiza(int tecla)
 				double dx = (mis_objetos[i]->getPosicionX()) -(mis_objetos[j]->getPosicionX());
 				double dy = mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY();
 
-				try
+				float dx_2, dy_2;
+				float deno = sqrt(dx*dx + dy*dy);
+				if (deno == 0)
 				{
-					float deno = sqrt(dx*dx + dy*dy);
-					if (deno = 0) throw - 1;
+					dx_2 = rand() % (10);
+					dy_2 = rand() % (10);
 				}
-				catch (int x)
+				else
 				{
-					cout << "ERROR: division por 0";
+					dx_2 = dx / deno;
+					dy_2 = dy / deno;
 				}
-				float dx_2 = dx / sqrt(dx*dx + dy*dy);
-				float dy_2 = dy / sqrt(dx*dx + dy*dy);
 
 
 				float v = sqrt(mis_objetos[i]->getVelocidadX() * mis_objetos[i]->getVelocidadX() +

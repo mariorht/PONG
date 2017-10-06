@@ -24,6 +24,7 @@ public:
 	int getTamColeccion();
 	void AgregaObjeto(ObjetoJuego *objeto);
 	void EliminaObjeto(ObjetoJuego *objeto);
+	void ColeccionObjetos::EliminaUltimoObjeto();
 };
 
 #endif
