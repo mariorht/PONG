@@ -13,11 +13,15 @@ LogicaJuego::~LogicaJuego()
 {
 }
 
-void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos coleccion, Campo *campo)
+bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos coleccion, Campo *campo)
 {
+	bool GolMarcado = false;
 	int puntuacion_A, puntuacion_B;
 	puntuacion_A = mi_marcador->getGolesA();
 	puntuacion_B = mi_marcador->getGolesB();
+
+	float ancho_campo = campo->getAnchoCampo();
+	float alto_campo = campo->getAltoCampo();
 
 	vector<ObjetoJuego*> mis_objetos = coleccion.getColeccionObjetos();
 	int n_objetos = coleccion.getTamColeccion();
@@ -28,23 +32,24 @@ void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 		{
 			if ((mis_objetos[i]->getPosicionX()) > campo->getPosPorteriaDcha() ) //MIRAR TAMAÑO
 			{
+
 				mi_marcador->AumentaGolA();
-				cout << "Gol del equipo A" << endl;
-				mis_objetos[i]->setPosicionX(400 + rand()%(600-400));
-				mis_objetos[i]->setPosicionY(100 + rand() % (900 - 100));
+				GolMarcado = true;
+				mis_objetos[i]->setPosicionX(0.3*ancho_campo + rand()% (int)(0.6*ancho_campo-0.3*ancho_campo));
+				mis_objetos[i]->setPosicionY(0.1*alto_campo + rand() % (int)(0.9*alto_campo - 0.1*alto_campo));
 
 				mis_objetos[i]->setVelocidadX(3 + rand() % (8 - 3));
 				mis_objetos[i]->setVelocidadY(3 + rand() % (8 - 3));
-
+				
 
 			}
 
 			else if ((mis_objetos[i]->getPosicionX()) < campo->getPosPorteriaIzq())//MIRAR TAMAÑO
 			{
 				mi_marcador->AumentaGolB();
-				cout << "Gol del equipo B" << endl;
-				mis_objetos[i]->setPosicionX(400 + rand() % (600 - 400));
-				mis_objetos[i]->setPosicionY(100 + rand() % (900 - 100));
+				GolMarcado = true;
+				mis_objetos[i]->setPosicionX(0.3*ancho_campo + rand() % (int)(0.6*ancho_campo - 0.3*ancho_campo));
+				mis_objetos[i]->setPosicionY(0.1*alto_campo + rand() % (int)(0.9*alto_campo - 0.1*alto_campo));
 
 				mis_objetos[i]->setVelocidadX(-8 + rand() % (-3 + 8));
 				mis_objetos[i]->setVelocidadY(-8 + rand() % (-3 + 8));
@@ -52,12 +57,9 @@ void LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 			}
 		}
+		
 	}
 
 	
-
-	
-
-
-
+	return GolMarcado;
 }

@@ -11,6 +11,7 @@ class InteligenciaArtificial
 protected:
 	Raqueta *mi_raqueta;
 	int dificultad;
+
 public:
 	InteligenciaArtificial(Raqueta* r);
 	~InteligenciaArtificial();

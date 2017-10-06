@@ -20,21 +20,20 @@ protected:
 	float velX, velY;
 	float aX, aY;
 	bool AfectadoPorPulsacion;
+	bool SiRebotoSueno;
+	bool AfectadoPorChoque;
+	bool EsAtravesado;
+	bool PuedoMeterGol;
+	
 	Uint32 color;
 	float rozamiento;
-	
 	float ancho, alto;
-
-	bool PuedoMeterGol;
+	
 	Campo *campo;
+	string Forma;
 
 public:
-	string Forma;
-	bool EsAtravesado;
-	bool AfectadoPorChoque; //provisional aquí
-
-
-
+	
 	ObjetoJuego(Uint32 color,
 		float px, float py, 
 		float vx, float vy,
@@ -55,6 +54,9 @@ public:
 
 	bool getAfectadoPorPulsacion();
 	bool getPuedoMeterGol();
+	bool getSiRebotoSueno();
+	bool getAfectadoPorChoque();
+	bool getEsAtravesado();
 
 	float getAncho();
 	float getAlto();
@@ -65,6 +67,8 @@ public:
 	float getAceleracionX();
 	float getAceleracionY();
 	float getRozamiento();
+
+	string getForma();
 
 };
 

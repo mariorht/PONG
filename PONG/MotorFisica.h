@@ -26,7 +26,7 @@ public:
 	MotorFisica(ColeccionObjetos *objetos);
 	//~MotorFisica();
 
-	void Actualiza(int tecla);
+	bool Actualiza(int tecla);
 	void Mueve(ObjetoJuego *obj);
 
 	//Devuelve la parte del objeto 1 que rebotó

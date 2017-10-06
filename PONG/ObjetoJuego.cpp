@@ -17,6 +17,7 @@ ObjetoJuego::ObjetoJuego(Uint32 c, float px, float py, float vx, float vy, float
 	PuedoMeterGol = false;
 	AfectadoPorPulsacion = false;
 	AfectadoPorChoque = false;
+	SiRebotoSueno = false;
 	Forma = "rectangulo";
 	campo = mi_campo_;
 	EsAtravesado = false;
@@ -137,3 +138,24 @@ bool ObjetoJuego::getPuedoMeterGol()
 {
 	return PuedoMeterGol;
 }
+
+bool ObjetoJuego::getSiRebotoSueno()
+{
+	return SiRebotoSueno;
+}
+
+bool ObjetoJuego::getAfectadoPorChoque()
+{
+	return AfectadoPorChoque;
+}
+
+bool ObjetoJuego::getEsAtravesado()
+{
+	return EsAtravesado;
+}
+
+string ObjetoJuego::getForma()
+{
+	return Forma;
+}
+

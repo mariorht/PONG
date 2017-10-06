@@ -12,7 +12,7 @@ public:
 	LogicaJuego();
 	~LogicaJuego();
 
-	void ControlaMarcador(Marcador *mi_marcador, ColeccionObjetos coleccion, Campo *campo);
+	bool ControlaMarcador(Marcador *mi_marcador, ColeccionObjetos coleccion, Campo *campo);
 };
 
 #endif

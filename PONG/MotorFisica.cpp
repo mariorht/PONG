@@ -29,35 +29,37 @@ void MotorFisica::Mueve(ObjetoJuego *obj)
 	obj->setPosicionY(py + vy);
 }
 
-void MotorFisica::Actualiza(int tecla)
+bool MotorFisica::Actualiza(int tecla)
 {
 	vector<ObjetoJuego*> mis_objetos = coleccion->getColeccionObjetos();
 	num_objetos = coleccion->getTamColeccion();
+	bool HayColision = FALSE;
 
 	//Detectar colisiones
 	for (int i = 0; i < num_objetos; i++)
 	{
-		if (mis_objetos[i]->EsAtravesado) continue;
+		if (mis_objetos[i]->getEsAtravesado()) continue;
 		for (int j = i + 1; j < num_objetos; j++)
 		{
-			if (mis_objetos[j]->EsAtravesado) continue;
+			if (mis_objetos[j]->getEsAtravesado()) continue;
 			int colision = DetectaColision(*mis_objetos[i], *mis_objetos[j]);
 
-			if (mis_objetos[i]->Forma == "rectangulo" ||
-				mis_objetos[j]->Forma == "rectangulo")
+			if (mis_objetos[i]->getForma() == "rectangulo" ||
+				mis_objetos[j]->getForma() == "rectangulo")
 			{
 				if (colision == RebotaArriba )
 				{
-					//mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-					//mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
-					if (mis_objetos[i]->AfectadoPorChoque)
+					if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
+						HayColision = TRUE;
+
+					if (mis_objetos[i]->getAfectadoPorChoque())
 					{
 						mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
 						mis_objetos[i]->setPosicionY(mis_objetos[i]->getPosicionY() + 20);
 					}
 
 
-					if (mis_objetos[j]->AfectadoPorChoque)
+					if (mis_objetos[j]->getAfectadoPorChoque())
 					{
 						mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
 						mis_objetos[j]->setPosicionY(mis_objetos[j]->getPosicionY() - 20);
@@ -67,16 +69,17 @@ void MotorFisica::Actualiza(int tecla)
 
 				if (colision == RebotaAbajo)
 				{
-					//mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
-					//mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
-					if (mis_objetos[i]->AfectadoPorChoque)
+					if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
+						HayColision = TRUE;
+
+					if (mis_objetos[i]->getAfectadoPorChoque())
 					{
 						mis_objetos[i]->setVelocidadY(-mis_objetos[i]->getVelocidadY());
 						mis_objetos[i]->setPosicionY(mis_objetos[i]->getPosicionY()-20);
 					}
 
 
-					if (mis_objetos[j]->AfectadoPorChoque)
+					if (mis_objetos[j]->getAfectadoPorChoque())
 					{
 						mis_objetos[j]->setVelocidadY(-mis_objetos[j]->getVelocidadY());
 						mis_objetos[j]->setPosicionY(mis_objetos[j]->getPosicionY() + 20);
@@ -86,12 +89,15 @@ void MotorFisica::Actualiza(int tecla)
 
 				else if (colision == RebotaIzquierda)
 				{
-					if (mis_objetos[i]->AfectadoPorChoque)
+					if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
+						HayColision = TRUE;
+
+					if (mis_objetos[i]->getAfectadoPorChoque())
 					{
 						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
 						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() + 10);
 					}
-					if (mis_objetos[j]->AfectadoPorChoque)
+					if (mis_objetos[j]->getAfectadoPorChoque())
 					{
 						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
 						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() - 10);
@@ -101,12 +107,15 @@ void MotorFisica::Actualiza(int tecla)
 
 				else if (	colision == RebotaDerecha)
 				{
-					if (mis_objetos[i]->AfectadoPorChoque)
+					if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
+						HayColision = TRUE;
+
+					if (mis_objetos[i]->getAfectadoPorChoque())
 					{
 						mis_objetos[i]->setVelocidadX(-mis_objetos[i]->getVelocidadX());
 						mis_objetos[i]->setPosicionX(mis_objetos[i]->getPosicionX() - 10);
 					}
-					if (mis_objetos[j]->AfectadoPorChoque)
+					if (mis_objetos[j]->getAfectadoPorChoque())
 					{
 						mis_objetos[j]->setVelocidadX(-mis_objetos[j]->getVelocidadX());
 						mis_objetos[j]->setPosicionX(mis_objetos[j]->getPosicionX() + 10);
@@ -114,8 +123,11 @@ void MotorFisica::Actualiza(int tecla)
 				}
 			}
 
-			else if (colision > 0 && mis_objetos[i]->Forma == "circulo" && mis_objetos[j]->Forma == "circulo")
+			else if (colision > 0 && mis_objetos[i]->getForma() == "circulo" && mis_objetos[j]->getForma() == "circulo")
 			{
+				if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
+					HayColision = TRUE;
+
 				double dx = (mis_objetos[i]->getPosicionX()) -(mis_objetos[j]->getPosicionX());
 				double dy = mis_objetos[i]->getPosicionY() - mis_objetos[j]->getPosicionY();
 
@@ -189,7 +201,7 @@ void MotorFisica::Actualiza(int tecla)
 		Mueve(mis_objetos[i]);
 	
 	}
-
+	return HayColision;
 
 }
 

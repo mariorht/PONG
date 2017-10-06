@@ -26,14 +26,15 @@ void Render::DibujaTodo(Campo *campo)
 		float h = mis_objetos[i]->getAlto() / alto_campo *SCREEN_HEIGHT;
 
 		//Quizá meterlo en DibujaRectangulo
-		if (mis_objetos[i]->Forma == "rectangulo")
+		if (mis_objetos[i]->getForma() == "rectangulo")
 		{
 			image = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 			SDL_FillRect(image, NULL, mis_objetos[i]->getColor());
 		}
-		else if (mis_objetos[i]->Forma == "circulo")
+		else if (mis_objetos[i]->getForma() == "circulo")
 		{
 			image = SDL_LoadBMP("dot_black.bmp");
+			SDL_SetColorKey(image, SDL_TRUE, (0,0,0));
 		}
 
 		rect = image->clip_rect;

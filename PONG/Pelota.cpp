@@ -9,6 +9,7 @@ Pelota::Pelota(Uint32 color, float px, float py, float vx, float vy, float ax, f
 	PuedoMeterGol = true;
 	AfectadoPorChoque = true;
 	Forma = "circulo";
+	SiRebotoSueno = true;
 }
 
 
