@@ -2,9 +2,7 @@
 #ifndef CAMPO_H
 #define CAMPO_H
 
-#define SCREEN_WIDTH  1280
-#define SCREEN_HEIGHT 700
-
+// Clase Campo: Almacena el tamaño del campo y la posición de las porterías
 class Campo 
 {
 protected:
@@ -14,11 +12,23 @@ protected:
 	float pos_porteria_dcha;
 	
 public:
-	Campo(float w, float h);
-	//~Campo();
+
+	/** Constructor:
+	param float w : ancho del campo
+	param float h : alto del campo
+	*/
+	Campo(float w, float h); 
+
+	/** Devuelve el ancho del campo */
 	float getAnchoCampo();
+
+	/** Devuelve el alto del campo */
 	float getAltoCampo();
+
+	/** Devuelve la posición de la portería izquierda */
 	float getPosPorteriaIzq();
+
+	/** Devuelve la posición de la portería derecha */
 	float getPosPorteriaDcha();
 };
 

@@ -4,7 +4,8 @@
 /* FECHA: 08/10/2017                                  */
 /* CONTENIDO: Implementación de PONG en C++           */
 /*                                                    */
-/******************************************************/
+/******************************************************/
+
 
 // Inclusión de librerías
 #include "ObjetoJuego.h"

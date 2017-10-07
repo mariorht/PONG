@@ -25,6 +25,7 @@ Menu::Menu(string tipo_fuente, float tam_fuente, SDL_Window * window)
 
 Menu::~Menu()
 {
+	TTF_CloseFont(fuente);
 }
 
 TTF_Font *Menu::GetFuente()
