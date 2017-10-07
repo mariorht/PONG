@@ -102,13 +102,6 @@ int main(int arcg, char * args[])
 	{
 		//Get window surface
 		screen = SDL_GetWindowSurface(window);
-
-		//Fill the surface white
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
-
-		//Update the surface
-		SDL_UpdateWindowSurface(window);
-
 		
 
 
@@ -450,12 +443,12 @@ int main(int arcg, char * args[])
 				motorRender.Escribe(menu_marcador, window, s_golesA, blanco, 0.35*ancho_campo, 0.1*alto_campo, mi_campo);
 				motorRender.Escribe(menu_marcador, window, s_golesB, blanco, 0.59*ancho_campo, 0.1*alto_campo, mi_campo);
 
-				if (golesA == 10)
+				if (golesA >= 10)
 				{
 					estado = VictoriaJugador1;
 					recien_entrado = true;
 				}
-				if (golesB == 10)
+				if (golesB >= 10)
 				{
 					estado = VictoriaJugador2;
 					recien_entrado = true;
@@ -522,7 +515,7 @@ int main(int arcg, char * args[])
 
 			}
 
-			SDL_UpdateWindowSurface(window);
+			motorRender.RefrescaPantalla(window);
 			Sleep(10);
 
 

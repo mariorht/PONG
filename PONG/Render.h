@@ -33,9 +33,9 @@ public:
 	void DibujaTodo(Campo *campo);
 
 	void BorraPantalla();
-
-
+	
 	void Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_Color color, float pos_x, float pos_y, Campo *campo);
+	void RefrescaPantalla(SDL_Window *window);
 
 
 };

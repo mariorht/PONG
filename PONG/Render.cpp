@@ -80,5 +80,10 @@ void Render::Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_C
 
 }
 
+void Render::RefrescaPantalla(SDL_Window * window)
+{
+	SDL_UpdateWindowSurface(window);
+}
+
 
 
