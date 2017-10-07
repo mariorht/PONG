@@ -8,11 +8,6 @@ Marcador::Marcador(int goles_A, int goles_B)
 }
 
 
-
-Marcador::~Marcador()
-{
-}
-
 void Marcador::AumentaGolA()
 {
 	goles_A++;

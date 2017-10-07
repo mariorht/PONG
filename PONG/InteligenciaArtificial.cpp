@@ -8,18 +8,17 @@ InteligenciaArtificial::InteligenciaArtificial(Raqueta* r)
 }
 
 
-InteligenciaArtificial::~InteligenciaArtificial()
-{
-}
-
 
 void InteligenciaArtificial::EligeMovimiento(ObjetoJuego * p)
 {
-
+	// Distancia entra la raqueta y la pelota
 	float distanciaY = p->getPosicionY() - (mi_raqueta->getPosicionY() + mi_raqueta->getAlto() / 2);
 	float distanciaX = p->getPosicionX() - mi_raqueta->getPosicionX();
 
+	// Distancia entre la raqueta y el centro del campo
 	float distancia_con_centro = 500 - (mi_raqueta->getPosicionY() + mi_raqueta->getAlto() / 2);
+
+	// Si la pelota está cerca de la raqueta, ésta sigue la pelota
 	if (abs(distanciaX)<500)
 	{
 		if (distanciaY > mi_raqueta->getAlto() / 2)
@@ -32,6 +31,7 @@ void InteligenciaArtificial::EligeMovimiento(ObjetoJuego * p)
 
 	}
 
+	// Si está lejos, se lleva la raqueta al centro
 	else
 	{
 		

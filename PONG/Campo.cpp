@@ -1,7 +1,6 @@
 #include "Campo.h"
 
 
-
 Campo::Campo(float w, float h)
 {
 	ancho = w;
@@ -30,10 +29,4 @@ float Campo::getPosPorteriaDcha()
 	return pos_porteria_dcha;
 }
 
-
-/*
-Campo::~Campo()
-{
-}
-*/
 

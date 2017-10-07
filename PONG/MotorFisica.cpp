@@ -31,13 +31,14 @@ void MotorFisica::Mueve(ObjetoJuego *obj)
 
 void MotorFisica::GestionaRebotePorArriba(ObjetoJuego *obj1, ObjetoJuego *obj2)
 {
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en Y 
 	if (obj1->getAfectadoPorChoque())
 	{
-		obj1->setVelocidadY(-obj1->getVelocidadY());
-		obj1->setPosicionY(obj1->getPosicionY() + 20);
+		obj1->setVelocidadY(-obj1->getVelocidadY());	
+		obj1->setPosicionY(obj1->getPosicionY() + 20);	
 	}
 
-
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en Y
 	if (obj2->getAfectadoPorChoque())
 	{
 		obj2->setVelocidadY(-obj2->getVelocidadY());
@@ -47,13 +48,14 @@ void MotorFisica::GestionaRebotePorArriba(ObjetoJuego *obj1, ObjetoJuego *obj2)
 
 void MotorFisica::GestionaRebotePorAbajo(ObjetoJuego *obj1, ObjetoJuego *obj2)
 {
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en Y
 	if (obj1->getAfectadoPorChoque())
 	{
 		obj1->setVelocidadY(-obj1->getVelocidadY());
 		obj1->setPosicionY(obj1->getPosicionY() - 20);
 	}
 
-
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en Y
 	if (obj2->getAfectadoPorChoque())
 	{
 		obj2->setVelocidadY(-obj2->getVelocidadY());
@@ -63,11 +65,14 @@ void MotorFisica::GestionaRebotePorAbajo(ObjetoJuego *obj1, ObjetoJuego *obj2)
 
 void MotorFisica::GestionaRebotePorIzquierda(ObjetoJuego *obj1, ObjetoJuego *obj2)
 {
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en X
 	if (obj1->getAfectadoPorChoque())
 	{
 		obj1->setVelocidadX(-obj1->getVelocidadX());
 		obj1->setPosicionX(obj1->getPosicionX() + 20);
 	}
+
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en X
 	if (obj2->getAfectadoPorChoque())
 	{
 		obj2->setVelocidadX(-obj2->getVelocidadX());
@@ -78,11 +83,14 @@ void MotorFisica::GestionaRebotePorIzquierda(ObjetoJuego *obj1, ObjetoJuego *obj
 
 void MotorFisica::GestionaRebotePorDerecha(ObjetoJuego *obj1, ObjetoJuego *obj2)
 {
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en X
 	if (obj1->getAfectadoPorChoque())
 	{
 		obj1->setVelocidadX(-obj1->getVelocidadX());
 		obj1->setPosicionX(obj1->getPosicionX() - 10);
 	}
+
+	// Si el objeto es afectado por choque se cambia la posición y velocidad en X
 	if (obj2->getAfectadoPorChoque())
 	{
 		obj2->setVelocidadX(-obj2->getVelocidadX());
@@ -92,32 +100,32 @@ void MotorFisica::GestionaRebotePorDerecha(ObjetoJuego *obj1, ObjetoJuego *obj2)
 
 void MotorFisica::GestionaReboteCirculos(ObjetoJuego *obj1, ObjetoJuego *obj2)
 {
-	//Vector en la dirección de los centros
+	// Vector en la dirección de los centros
 	double dx = (obj1->getPosicionX()) - (obj2->getPosicionX());
 	double dy = obj1->getPosicionY() - obj2->getPosicionY();
 
-	//Si las bolas están una encima de la otra la dirección será aleatoria
+	// Si las bolas están una encima de la otra la dirección será aleatoria
 	if (dx == 0 && dy == 0)
 	{
 		dx = rand() % (10);
 		dy = rand() % (10);
 	}
 	
-	//Hagámoslo unitario
+	// Hagámoslo unitario
 	float dx_2, dy_2;
 	float deno = sqrt(dx*dx + dy*dy);
 	dx_2 = dx / deno;
 	dy_2 = dy / deno;
 
-	//Velocidad de la primera pelota
+	// Velocidad de la primera pelota
 	float v1 = sqrt(obj1->getVelocidadX() * obj1->getVelocidadX() +
 		obj1->getVelocidadY() *obj1->getVelocidadY());
 
-	//Velocidad de la segunda pelota
+	// Velocidad de la segunda pelota
 	float v2 = sqrt(obj2->getVelocidadX() * obj2->getVelocidadX() +
 		obj2->getVelocidadY() *obj2->getVelocidadY());
 
-	//Cambiamos la dirección de la velocidad
+	// Cambiamos la dirección de la velocidad
 	obj1->setVelocidadX(dx_2*v1);
 	obj1->setVelocidadY(dy_2*v1);
 
@@ -136,7 +144,7 @@ bool MotorFisica::Actualiza(int tecla)
 	num_objetos = coleccion->getTamColeccion();
 	bool HayColision = FALSE;
 
-	//Detectar colisiones
+	// Detectar colisiones
 	for (int i = 0; i < num_objetos; i++)
 	{
 		if (mis_objetos[i]->getEsAtravesado()) continue;
@@ -145,7 +153,7 @@ bool MotorFisica::Actualiza(int tecla)
 			if (mis_objetos[j]->getEsAtravesado()) continue;
 			int colision = DetectaColision(*mis_objetos[i], *mis_objetos[j]);
 
-			//Colisiones con "Rectángulos"
+			// Colisiones con "Rectángulos"
 			if (mis_objetos[i]->getForma() == "rectangulo" ||
 				mis_objetos[j]->getForma() == "rectangulo")
 			{
@@ -184,7 +192,7 @@ bool MotorFisica::Actualiza(int tecla)
 				}
 			}
 
-			//Colisiones entre círculos
+			// Colisiones entre círculos
 			else if (colision > 0 && mis_objetos[i]->getForma() == "circulo" && mis_objetos[j]->getForma() == "circulo")
 			{
 				if ((mis_objetos[i]->getSiRebotoSueno()) || (mis_objetos[j]->getSiRebotoSueno()))
@@ -196,7 +204,7 @@ bool MotorFisica::Actualiza(int tecla)
 		}
 	}
 
-	//Control de las raquetas
+	// Control de las raquetas
 	for (int i = 0; i < num_objetos; i++)
 	{
 		if (mis_objetos[i]->getAfectadoPorPulsacion())
@@ -244,7 +252,7 @@ bool MotorFisica::Actualiza(int tecla)
 
 int MotorFisica::DetectaColision(ObjetoJuego o1, ObjetoJuego o2)
 {
-	//Definir bordes de los objetos
+	// Definir bordes de los objetos
 	float borde_izq_o1, borde_dcho_o1, borde_arriba_o1, borde_abajo_o1;
 	borde_izq_o1 = o1.getPosicionX();
 	borde_dcho_o1 = borde_izq_o1 + o1.getAncho();
@@ -258,7 +266,7 @@ int MotorFisica::DetectaColision(ObjetoJuego o1, ObjetoJuego o2)
 	borde_abajo_o2 = borde_arriba_o2 + o2.getAlto();
 
 
-	//Detección de colisiones
+	// Detección de colisiones
 	if (borde_abajo_o1 <= borde_arriba_o2		||
 			borde_arriba_o1 >= borde_abajo_o2	||
 			borde_dcho_o1 <= borde_izq_o2		||

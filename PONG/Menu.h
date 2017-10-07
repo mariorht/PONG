@@ -34,8 +34,6 @@ public:
 	SDL_Window *window : ventana donde se escribe*/
 	Menu(string tipo_fuente, float tam_fuente, SDL_Window *window);
 
-	/** Destructor que cierra la fuente*/
-	~Menu();
 
 	/** Devuelve la fuente*/
 	TTF_Font *GetFuente();

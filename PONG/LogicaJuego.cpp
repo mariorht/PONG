@@ -9,9 +9,6 @@ LogicaJuego::LogicaJuego()
 }
 
 
-LogicaJuego::~LogicaJuego()
-{
-}
 
 bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos coleccion, Campo *campo)
 {
@@ -30,7 +27,10 @@ bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 		if (mis_objetos[i]->getPuedoMeterGol()) 
 		{
-			if ((mis_objetos[i]->getPosicionX()) > campo->getPosPorteriaDcha() ) //MIRAR TAMAÑO
+			// Si la pelota supera la portería derecha se aumentan los goles del equipo 1 
+			// y la pelota se traslada a una posición aleatoria alrededor del centro del campo
+			// con velocidad aleatoria entre ciertos valores
+			if ((mis_objetos[i]->getPosicionX()) > campo->getPosPorteriaDcha() ) 
 			{
 
 				mi_marcador->AumentaGolA();
@@ -44,7 +44,10 @@ bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 
 			}
 
-			else if ((mis_objetos[i]->getPosicionX()) < campo->getPosPorteriaIzq())//MIRAR TAMAÑO
+			// Si la pelota supera la portería izquierda se aumentan los goles del equipo 2 
+			// y la pelota se traslada a una posición aleatoria alrededor del centro del campo
+			// con velocidad aleatoria entre ciertos valores
+			else if ((mis_objetos[i]->getPosicionX()) < campo->getPosPorteriaIzq())
 			{
 				mi_marcador->AumentaGolB();
 				GolMarcado = true;

@@ -20,9 +20,6 @@ public:
 	/** Constructor :*/
 	ColeccionObjetos();
 
-	/** Destructor :*/
-	~ColeccionObjetos();
-
 	/** Devuelve un vector de punteros */ 
 	vector<ObjetoJuego*> getColeccionObjetos();
 

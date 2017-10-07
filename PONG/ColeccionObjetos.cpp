@@ -22,14 +22,20 @@ void ColeccionObjetos::AgregaObjeto(ObjetoJuego * objeto)
 void ColeccionObjetos::EliminaObjeto(ObjetoJuego *objeto)
 {
 	ObjetoJuego* obj;
-	for (int i = 0; i < tam_coleccion; i++) {
+	int i = 0;
+	obj = objetos[i];
+	// Búsqueda del objeto a borra en la colección 
+	while (i < tam_coleccion && obj != objeto)
+	{
+		i++;
 		obj = objetos[i];
-		if (obj == objeto)
-		{
-			objetos.erase(objetos.begin() + i);
-			tam_coleccion--;
-		}
+	}
 
+	// Si se encuentra se borra
+	if (i < tam_coleccion)
+	{
+		objetos.erase(objetos.begin() + i);
+		tam_coleccion--;
 	}
 
 }
@@ -45,8 +51,3 @@ ColeccionObjetos::ColeccionObjetos()
 }
 
 
-
-
-ColeccionObjetos::~ColeccionObjetos()
-{
-}
