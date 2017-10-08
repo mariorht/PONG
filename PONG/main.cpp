@@ -135,7 +135,7 @@ int main(int arcg, char * args[])
 	mi_pelota.reserve(30);
 	for (int i = 1; i < 2; i++)
 	{
-		Pelota pelota(Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 6.5, 7, 0, 0, 20, 0, &mi_campo));
+		Pelota pelota(Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 7.5, 9, 0, 0, 20, 0, &mi_campo));
 		mi_pelota.push_back(pelota);
 		mi_coleccion.AgregaObjeto(&(mi_pelota.back()));
 	}
@@ -267,8 +267,8 @@ int main(int arcg, char * args[])
 					// Escribir menú
 					motorRender.BorraPantalla();
 					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", azul, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR (W/S)", azul, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES (W/S - Teclas de direccion)", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
 					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
@@ -304,8 +304,8 @@ int main(int arcg, char * args[])
 					// Escribir menú
 					motorRender.BorraPantalla();
 					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", azul, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR (W/S)", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES (W/S - Teclas de direccion)", azul, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
 					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
@@ -341,8 +341,8 @@ int main(int arcg, char * args[])
 					// Escribir menú
 					motorRender.BorraPantalla();
 					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR (W/S)", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES (W/S - Teclas de direccion)", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
 					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", azul, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
