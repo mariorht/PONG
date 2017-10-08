@@ -55,3 +55,8 @@ void Raqueta::setPosicionY(float py)
 	else posY = py;
 
 }
+
+bool Raqueta::esControladoPorIA()
+{
+	return ControladoPorIA;
+}

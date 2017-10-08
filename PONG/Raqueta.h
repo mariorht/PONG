@@ -7,10 +7,11 @@
 // Clase heredada de ObjetoJuego que define una raqueta
 class Raqueta :	public ObjetoJuego
 {
-	
-public:
+protected:
 	bool ControladoPorIA;	// Indica si es controlado por la Inteligencia Artificial
 	float V_max;			// Velocidad máxima
+	
+public:
 
 	/**Constructor:
 	param Uint32 color : color del objeto
@@ -38,6 +39,8 @@ public:
 
 	/** Activa el control de la raqueta por IA*/
 	void setIAon();
+
+	bool esControladoPorIA();
 };
 
 #endif

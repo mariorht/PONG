@@ -10,8 +10,16 @@ Render::Render(ColeccionObjetos *objetos, SDL_Surface *d)
 
 }
 
+Render::~Render()
+{
+	SDL_FreeSurface(destination);
+}
+
 void Render::DibujaTodo(Campo *campo)
 {
+	//Variable auxiliar
+	SDL_Surface *image=NULL;
+
 	// Obtener dimensiones del campo
 	float ancho_campo = campo->getAnchoCampo();
 	float alto_campo = campo->getAltoCampo();
@@ -50,7 +58,7 @@ void Render::DibujaTodo(Campo *campo)
 		rect.y = (int)posicionY;
 
 		// Se copia el rectángulo en la imagen que se volcará a la pantalla
-		DibujaRectangulo();
+		DibujaRectangulo(image);
 		SDL_FreeSurface(image);
 
 
@@ -58,7 +66,7 @@ void Render::DibujaTodo(Campo *campo)
 
 }
 
-void Render::DibujaRectangulo()
+void Render::DibujaRectangulo(SDL_Surface *image)
 {
 
 	SDL_BlitSurface(image, NULL, destination, &rect);

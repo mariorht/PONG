@@ -21,11 +21,10 @@ protected:
 	ColeccionObjetos *coleccion;	// Puntero a la colección de objetos a pintar
 	int num_objetos;				// Número de objetos de la colección
 	SDL_Surface *destination;		// Puntero a la pantalla donde pintar
-	SDL_Surface *image;				// Puntero a la superficie donde pintar
 	SDL_Rect rect;					// Rectángulo
 
 	/** Dibuja un rectángulo*/
-	void DibujaRectangulo();
+	void DibujaRectangulo(SDL_Surface *image);
 
 
 public:
@@ -34,7 +33,11 @@ public:
 	param ColeccionObjetos *objeto : Colección de objetos a pintar
 	param SDL_Surface *d : Superficie donde pintar*/
 	Render(ColeccionObjetos *objetos, SDL_Surface *d);
-	
+
+	/**Destructor*/
+	~Render();
+
+
 	/** Dibuja todos los objetos de la colección
 	param Campo *campo : Puntero al objeto campo*/
 	void DibujaTodo(Campo *campo);
