@@ -119,9 +119,9 @@ int main(int arcg, char * args[])
 		
 
 	// Crear campo de juego
-	Campo *mi_campo = new Campo(1920, 1080);
-	float ancho_campo = mi_campo->getAnchoCampo();
-	float alto_campo = mi_campo->getAltoCampo();
+	Campo mi_campo =  Campo(1920, 1080);
+	float ancho_campo = mi_campo.getAnchoCampo();
+	float alto_campo = mi_campo.getAltoCampo();
 
 	// Crear colección de objetos de juego
 	ColeccionObjetos mi_coleccion = ColeccionObjetos();
@@ -131,18 +131,20 @@ int main(int arcg, char * args[])
 	Uint32 blue = SDL_MapRGB(screen->format, 3, 169, 244);
 
 	// Crear pelotas y añadir a la colección
-	Pelota *mi_pelota;
-	for (int i = 1; i < 2; i++)
+	vector<Pelota> mi_pelota;
+	mi_pelota.reserve(30);
+	for (int i = 1; i < 3; i++)
 	{
-		mi_pelota = new Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 6.5, 7, 0, 0, 20/**De momento este es el tamaño del punto*/, 0, mi_campo);
-		mi_coleccion.AgregaObjeto(mi_pelota);
+		Pelota pelota(Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 6.5, 7, 0, 0, 20, 0, &mi_campo));
+		mi_pelota.push_back(pelota);
+		mi_coleccion.AgregaObjeto(&(mi_pelota.back()));
 	}
 
 	// Crear raquetas y añadir a la colección
 	float ancho_raqueta = ancho_campo * 0.01;
 	float alto_raqueta = alto_campo * 0.15;
-	Raqueta mi_raqueta_izq(white, mi_campo->getPosPorteriaIzq()+ancho_raqueta, alto_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, mi_campo);
-	Raqueta mi_raqueta_dcha(white, mi_campo->getPosPorteriaDcha() - 2*ancho_raqueta, alto_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, mi_campo);
+	Raqueta mi_raqueta_izq(white, mi_campo.getPosPorteriaIzq()+ancho_raqueta, alto_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, &mi_campo);
+	Raqueta mi_raqueta_dcha(white, mi_campo.getPosPorteriaDcha() - 2*ancho_raqueta, alto_campo*0.5, 0, 0, ancho_raqueta, alto_raqueta, .1, &mi_campo);
 	mi_coleccion.AgregaObjeto(&mi_raqueta_izq);
 	mi_coleccion.AgregaObjeto(&mi_raqueta_dcha);
 
@@ -150,17 +152,21 @@ int main(int arcg, char * args[])
 	InteligenciaArtificial miIA(&mi_raqueta_dcha);
 
 	// Crear paredes y añadir a la colección
-	Pared p_arriba(white, 0, 0.02*alto_campo, ancho_campo, 0.02*alto_campo, mi_campo, false);
-	Pared p_abajo(white, 0, 0.96*alto_campo, ancho_campo, 0.02*alto_campo, mi_campo, false);
+	Pared p_arriba(white, 0, 0.02*alto_campo, ancho_campo, 0.02*alto_campo, &mi_campo, false);
+	Pared p_abajo(white, 0, 0.96*alto_campo, ancho_campo, 0.02*alto_campo, &mi_campo, false);
+	vector<Pared> Paredes;//Se usará para crear paredes dinámicamente en el modo Experto
+	Paredes.reserve(20);//Se reserva espacio para 20 obstáculos
 	mi_coleccion.AgregaObjeto(&p_abajo);
 	mi_coleccion.AgregaObjeto(&p_arriba);
 
 	// Crear línea de medio campo y añadir a la colección
 	int largo_linea = (alto_campo - 10) / 20;
+	vector<Pared> decoracion;
+	decoracion.reserve(alto_campo / 2 * largo_linea); //Reservamos espacio para las líneas necesarias
 	for (int i = 0; 2 * i*largo_linea <= alto_campo - 0.04*alto_campo; i++)
 	{
-		Pared *decoracion = new Pared(white, 0.5*ancho_campo - 0.02*alto_campo, 0.04*alto_campo + 2 * i*largo_linea, 0.02*ancho_campo, largo_linea, mi_campo, true);
-		mi_coleccion.AgregaObjeto(decoracion);
+		decoracion.push_back(Pared(white, 0.5*ancho_campo - 0.02*alto_campo, 0.04*alto_campo + 2 * i*largo_linea, 0.02*ancho_campo, largo_linea, &mi_campo, true));
+		mi_coleccion.AgregaObjeto(&decoracion.back());
 	}
 
 	// Crear lógica del juego 
@@ -232,8 +238,8 @@ int main(int arcg, char * args[])
 			{
 				recien_entrado = false;
 				// Escribir títulos
-				motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
-				motorRender.Escribe(menu_titulo2, window, "Pulsa ENTER para continuar", azul, 0.20*ancho_campo, 0.6*alto_campo, mi_campo);
+				motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
+				motorRender.Escribe(menu_titulo2, window, "Pulsa ENTER para continuar", azul, 0.20*ancho_campo, 0.6*alto_campo, &mi_campo);
 
 			}
 
@@ -260,10 +266,10 @@ int main(int arcg, char * args[])
 					recien_entrado = false;
 					// Escribir menú
 					motorRender.BorraPantalla();
-					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", azul, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
+					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR", azul, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
 
@@ -297,10 +303,10 @@ int main(int arcg, char * args[])
 					recien_entrado = false;
 					// Escribir menú
 					motorRender.BorraPantalla();
-					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", azul, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
+					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", azul, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", blanco, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
 
@@ -334,10 +340,10 @@ int main(int arcg, char * args[])
 					recien_entrado = false;
 					// Escribir menú
 					motorRender.BorraPantalla();
-					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, mi_campo);
-					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", azul, 0.25*ancho_campo, 0.85*alto_campo, mi_campo);
+					motorRender.Escribe(menu_titulo, window, "PONG", blanco, 0.3*ancho_campo, 0.35*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "UN JUGADOR", blanco, 0.25*ancho_campo, 0.65*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "DOS JUGADORES", blanco, 0.25*ancho_campo, 0.75*alto_campo, &mi_campo);
+					motorRender.Escribe(menu_modos, window, "MODO EXPERTO (DOS JUGADORES)", azul, 0.25*ancho_campo, 0.85*alto_campo, &mi_campo);
 
 				}
 
@@ -384,7 +390,7 @@ int main(int arcg, char * args[])
 				}
 
 				// Control de la raqueta en función de la pelota
-				miIA.EligeMovimiento(mi_pelota);
+				miIA.EligeMovimiento(&mi_pelota[0]);
 
 			} break;
 
@@ -406,7 +412,8 @@ int main(int arcg, char * args[])
 				// Si el contador llega a 1000, se añaden una pelota y una pared
 				if (cont == 1000)
 				{
-					mi_pelota = new Pelota(white,
+					mi_pelota.push_back(
+						Pelota(white,
 						0.4*ancho_campo + rand() % ((int)(0.6*ancho_campo - 0.4*ancho_campo)),
 						0.1*alto_campo + rand() % ((int)(0.9*alto_campo - 0.1*alto_campo)),
 						6.5,
@@ -415,17 +422,17 @@ int main(int arcg, char * args[])
 						0,
 						12/**De momento este es el tamaño del punto*/,
 						0,
-						mi_campo);
-					mi_coleccion.AgregaObjeto(mi_pelota);
+						&mi_campo));
+					mi_coleccion.AgregaObjeto(&(mi_pelota.back()));
 
-						Pared *pared = new Pared(blue,
+						Paredes.push_back(Pared(blue,
 						0.4*ancho_campo + rand() % ((int)(0.6*ancho_campo - 0.4*ancho_campo)),
 						0.3*alto_campo + rand() % ((int)(0.7*alto_campo - 0.3*alto_campo)),
 						0.05*ancho_campo + rand() % ((int)(0.2*ancho_campo - 0.05*ancho_campo)),
 						0.05*alto_campo + rand() % ((int)(0.2*alto_campo - 0.05*alto_campo)),
-						mi_campo,
-						false);
-					mi_coleccion.AgregaObjeto(pared);
+						&mi_campo,
+						false));
+					mi_coleccion.AgregaObjeto(&Paredes.back());
 
 
 				}
@@ -435,14 +442,14 @@ int main(int arcg, char * args[])
 				{
 
 					mi_coleccion.EliminaUltimoObjeto();
-					Pared *pared = new Pared(blue,
+					Paredes.push_back(Pared(blue,
 						0.4*ancho_campo + rand() % ((int)(0.6*ancho_campo - 0.4*ancho_campo)),
 						0.3*alto_campo + rand() % ((int)(0.9*alto_campo - 0.3*alto_campo)),
 						0.05*ancho_campo + rand() % ((int)(0.2*ancho_campo - 0.05*ancho_campo)),
 						0.05*alto_campo + rand() % ((int)(0.2*alto_campo - 0.05*alto_campo)),
-						mi_campo,
-						false);
-					mi_coleccion.AgregaObjeto(pared);
+						&mi_campo,
+						false));
+					mi_coleccion.AgregaObjeto(&Paredes.back());
 
 					cont = 0; // Reseteo contador
 				}
@@ -461,11 +468,11 @@ int main(int arcg, char * args[])
 				Mix_PlayChannel(-1, sonido_colision, 0);
 
 			// Se dibujan todos los objetos
-			motorRender.DibujaTodo(mi_campo);
+			motorRender.DibujaTodo(&mi_campo);
 
 			// Lógica del juego actualiza el marcador 
 			// Se reproduce un sonido en caso de gol
-			if (logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion, mi_campo))
+			if (logicaJuego.ControlaMarcador(&mi_marcador, mi_coleccion, &mi_campo))
 				Mix_PlayChannel(-1, sonido_gol, 0);
 
 			// Obtener los goles de cada equipo
@@ -476,8 +483,8 @@ int main(int arcg, char * args[])
 			string s_golesB = to_string(golesB);
 
 			// Pintar el marcador
-			motorRender.Escribe(menu_marcador, window, s_golesA, blanco, 0.35*ancho_campo, 0.1*alto_campo, mi_campo);
-			motorRender.Escribe(menu_marcador, window, s_golesB, blanco, 0.59*ancho_campo, 0.1*alto_campo, mi_campo);
+			motorRender.Escribe(menu_marcador, window, s_golesA, blanco, 0.35*ancho_campo, 0.1*alto_campo, &mi_campo);
+			motorRender.Escribe(menu_marcador, window, s_golesB, blanco, 0.59*ancho_campo, 0.1*alto_campo, &mi_campo);
 
 			// Si un equipo llega a 10 goles gana y cambia de estado. 
 			if (golesA >= 10)
@@ -502,20 +509,13 @@ int main(int arcg, char * args[])
 				// Se reproduce un sonido de victoria
 				Mix_PlayChannel(-1, sonido_victoria, 0);
 				motorRender.BorraPantalla();
-				motorRender.Escribe(menu_marcador, window, "VICTORIA DEL JUGADOR 1", blanco, 0.1*ancho_campo, 0.4*alto_campo, mi_campo);
+				motorRender.Escribe(menu_marcador, window, "VICTORIA DEL JUGADOR 1", blanco, 0.1*ancho_campo, 0.4*alto_campo, &mi_campo);
 			}
 
-			// Si se pulsa ENTER se reinicia el juego
-			if (miIU.DetectaPulsacion() == ENTER) 
+			// Si se pulsa ENTER se cierra el juego	
+			if (miIU.DetectaPulsacion() == ENTER)
 			{
-				// Destruye ventana
-				SDL_DestroyWindow(window);
-				// Cierra SDL 
-				SDL_Quit();
-				TTF_Quit();
-				Mix_Quit();
-				
-				main(NULL, NULL);
+				cerrar = true;
 			}
 							
 		}break;
@@ -529,21 +529,14 @@ int main(int arcg, char * args[])
 				// Se reproduce un sonido de victoria
 				Mix_PlayChannel(-1, sonido_victoria, 0);
 				motorRender.BorraPantalla();
-				motorRender.Escribe(menu_marcador, window, "VICTORIA DEL JUGADOR 2", blanco, 0.1*ancho_campo, 0.4*alto_campo, mi_campo);
+				motorRender.Escribe(menu_marcador, window, "VICTORIA DEL JUGADOR 2", blanco, 0.1*ancho_campo, 0.4*alto_campo, &mi_campo);
 			}
 
 				
-			// Si se pulsa ENTER se reinicia el juego	
+			// Si se pulsa ENTER se cierra el juego	
 			if (miIU.DetectaPulsacion() == ENTER)
 			{
-				// Destruye ventana
-				SDL_DestroyWindow(window);
-				// Cierra SDL 
-				SDL_Quit();
-				TTF_Quit();
-				Mix_Quit();
-
-				main(NULL, NULL);
+				cerrar = true;
 			}
 				
 		}break;
@@ -566,6 +559,9 @@ int main(int arcg, char * args[])
 	SDL_Quit();
 	TTF_Quit();
 	Mix_Quit();
+
+
+
 
 	return 0;
 

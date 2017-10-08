@@ -38,8 +38,8 @@ bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 				mis_objetos[i]->setPosicionX(0.3*ancho_campo + rand()% (int)(0.6*ancho_campo-0.3*ancho_campo));
 				mis_objetos[i]->setPosicionY(0.1*alto_campo + rand() % (int)(0.9*alto_campo - 0.1*alto_campo));
 
-				mis_objetos[i]->setVelocidadX(3 + rand() % (8 - 3));
-				mis_objetos[i]->setVelocidadY(3 + rand() % (8 - 3));
+				mis_objetos[i]->setVelocidadX(3.0 + rand() % (8 - 3));
+				mis_objetos[i]->setVelocidadY(3.0 + rand() % (8 - 3));
 				
 
 			}
@@ -54,8 +54,8 @@ bool LogicaJuego::ControlaMarcador(Marcador * mi_marcador, ColeccionObjetos cole
 				mis_objetos[i]->setPosicionX(0.3*ancho_campo + rand() % (int)(0.6*ancho_campo - 0.3*ancho_campo));
 				mis_objetos[i]->setPosicionY(0.1*alto_campo + rand() % (int)(0.9*alto_campo - 0.1*alto_campo));
 
-				mis_objetos[i]->setVelocidadX(-8 + rand() % (-3 + 8));
-				mis_objetos[i]->setVelocidadY(-8 + rand() % (-3 + 8));
+				mis_objetos[i]->setVelocidadX(-8.0 + rand() % (-3 + 8));
+				mis_objetos[i]->setVelocidadY(-8.0 + rand() % (-3 + 8));
 
 
 			}

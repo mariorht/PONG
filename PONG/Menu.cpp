@@ -21,7 +21,7 @@ Menu::Menu(string tipo_fuente, float tam_fuente, SDL_Window * window)
 	}
 	catch (int error)
 	{
-		cout << "Error al cargar la fuente" << endl;
+		cout << "Error al cargar la fuente: " << error <<  endl;
 	}
 }
 

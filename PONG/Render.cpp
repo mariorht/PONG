@@ -88,8 +88,8 @@ void Render::Escribe(Menu menu, SDL_Window *window, string texto_escribir, SDL_C
 
 	// Se crea el rectángulo con la posición del texto
 	SDL_Rect CuadroTexto;
-	CuadroTexto.x = (int) pos_x / campo->getAnchoCampo() * SCREEN_WIDTH;
-	CuadroTexto.y = (int) pos_y / campo->getAltoCampo() * SCREEN_HEIGHT;
+	CuadroTexto.x =  pos_x / campo->getAnchoCampo() * SCREEN_WIDTH;
+	CuadroTexto.y =  pos_y / campo->getAltoCampo() * SCREEN_HEIGHT;
 
 	// Se copia el rectángulo en la imagen que se volcará a la pantalla 
 	SDL_BlitSurface(texto, NULL, destination, &CuadroTexto);

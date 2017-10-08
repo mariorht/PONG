@@ -297,5 +297,6 @@ int MotorFisica::DetectaColision(ObjetoJuego o1, ObjetoJuego o2)
 		(borde_izq_o1 - 0*o1.getAncho()) >= borde_dcho_o2))
 		return RebotaAbajo;
 
+	return NoRebota;
 
 }
