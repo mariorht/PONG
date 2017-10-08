@@ -133,7 +133,7 @@ int main(int arcg, char * args[])
 	// Crear pelotas y añadir a la colección
 	vector<Pelota> mi_pelota;
 	mi_pelota.reserve(30);
-	for (int i = 1; i < 3; i++)
+	for (int i = 1; i < 2; i++)
 	{
 		Pelota pelota(Pelota(white, ancho_campo*0.12*i, alto_campo*0.05*i, 6.5, 7, 0, 0, 20, 0, &mi_campo));
 		mi_pelota.push_back(pelota);
